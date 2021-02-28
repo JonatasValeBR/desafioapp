@@ -1,0 +1,1 @@
+INSERT INTO Aplicativo (nome) VALUES ('Aplicativo 1'),('Aplicativo 2'),('Aplicativo 3'),('Aplicativo 4'),('Aplicativo 5');
