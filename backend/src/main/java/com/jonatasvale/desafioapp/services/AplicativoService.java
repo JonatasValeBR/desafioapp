@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jonatasvale.desafioapp.domain.Aplicativo;
 import com.jonatasvale.desafioapp.repositories.AplicativoRepository;
+import com.jonatasvale.desafioapp.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class AplicativoService {
@@ -16,7 +17,7 @@ public class AplicativoService {
 	
 	public Aplicativo buscar(Integer id) {
 		Optional<Aplicativo> obj = repository.findById(id);
-		return obj.orElse(null);
-		
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Aplicativo.class.getName()));
 	}
+	
 }

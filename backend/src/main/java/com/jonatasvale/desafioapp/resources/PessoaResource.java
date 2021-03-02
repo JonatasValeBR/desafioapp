@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jonatasvale.desafioapp.domain.Aplicativo;
-import com.jonatasvale.desafioapp.services.AplicativoService;
+import com.jonatasvale.desafioapp.domain.Pessoa;
+import com.jonatasvale.desafioapp.services.PessoaService;
 
 @RestController
-@RequestMapping(value="/aplicativos")
-public class AplicativoResource {
+@RequestMapping(value="/pessoas")
+public class PessoaResource {
 
 	@Autowired
-	private AplicativoService service;
+	private PessoaService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Aplicativo obj = service.buscar(id);
+		Pessoa obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj); 
 	}
 	
