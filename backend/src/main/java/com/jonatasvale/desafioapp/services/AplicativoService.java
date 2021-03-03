@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.jonatasvale.desafioapp.domain.Aplicativo;
+import com.jonatasvale.desafioapp.dto.AplicativoDTO;
 import com.jonatasvale.desafioapp.repositories.AplicativoRepository;
 import com.jonatasvale.desafioapp.services.exceptions.DataIntegrityException;
 import com.jonatasvale.desafioapp.services.exceptions.ObjectNotFoundException;
@@ -54,6 +55,10 @@ public class AplicativoService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				orderBy);
 		return repository.findAll(pageRequest);
+	}
+	
+	public Aplicativo fromDTO(AplicativoDTO objDto) {
+		return new Aplicativo(objDto.getId(),objDto.getNome());
 	}
 		
 }

@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.jonatasvale.desafioapp.domain.Perfil;
+import com.jonatasvale.desafioapp.dto.PerfilDTO;
 import com.jonatasvale.desafioapp.repositories.PerfilRepository;
 import com.jonatasvale.desafioapp.services.exceptions.DataIntegrityException;
 import com.jonatasvale.desafioapp.services.exceptions.ObjectNotFoundException;
@@ -45,6 +46,10 @@ public class PerfilService {
 	
 	public List<Perfil> buscarTudo(){
 		return repository.findAll();
+	}
+	
+	public Perfil fromDTO(PerfilDTO objDto) {
+		return new Perfil(objDto.getId(),objDto.getNome());
 	}
 }
 
