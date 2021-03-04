@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jonatasvale.desafioapp.domain.Aplicativo;
 import com.jonatasvale.desafioapp.dto.AplicativoDTO;
+import com.jonatasvale.desafioapp.resources.utils.URL;
 import com.jonatasvale.desafioapp.services.AplicativoService;
 
 @RestController
@@ -75,6 +76,32 @@ public class AplicativoResource {
 		return ResponseEntity.ok().body(listDto); 
 	}
 	
+	@RequestMapping(value="/pageName",method=RequestMethod.GET)
+	public ResponseEntity<Page<AplicativoDTO>> buscar(@RequestParam(value="nome", defaultValue="") String nome, 
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24")Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome")String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC")String direction) {
+		String nomeDecoded = URL.decodeParam(nome);
+		Page<Aplicativo> list = service.buscar(nomeDecoded, page, linesPerPage, orderBy, direction);
+		Page<AplicativoDTO> listDto = list.map(obj -> new AplicativoDTO(obj));
+		return ResponseEntity.ok().body(listDto); 
+	}
 	
+	
+	@RequestMapping(value="/pageNameAndPerfil",method=RequestMethod.GET)
+	public ResponseEntity<Page<AplicativoDTO>> buscar(
+			@RequestParam(value="nome", defaultValue="") String nome, 
+			@RequestParam(value="perfis", defaultValue="")String perfis, 
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24")Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome")String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC")String direction) {
+		List<Integer> ids = URL.decodeIntList(perfis);
+		String nomeDecoded = URL.decodeParam(nome);
+		Page<Aplicativo> list = service.buscar(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+		Page<AplicativoDTO> listDto = list.map(obj -> new AplicativoDTO(obj));
+		return ResponseEntity.ok().body(listDto); 
+	}
 	
 }

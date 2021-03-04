@@ -41,7 +41,7 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 		this.idade = idade;
 		this.cpf = cpf;
-		this.tipo =  tipo != null ? tipo.getCod() : null ;
+		this.tipo =  tipo != null ? tipo.getCod() : null;
 		this.perfil = perfil;
 	}
 

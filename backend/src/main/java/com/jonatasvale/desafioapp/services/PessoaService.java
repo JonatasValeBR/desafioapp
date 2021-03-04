@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jonatasvale.desafioapp.domain.Pessoa;
 import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
 import com.jonatasvale.desafioapp.dto.PessoaDTO;
+import com.jonatasvale.desafioapp.dto.PessoaNewDTO;
 import com.jonatasvale.desafioapp.repositories.PessoaRepository;
 import com.jonatasvale.desafioapp.services.exceptions.DataIntegrityException;
 import com.jonatasvale.desafioapp.services.exceptions.ObjectNotFoundException;
@@ -22,10 +23,10 @@ import com.jonatasvale.desafioapp.services.exceptions.ObjectNotFoundException;
 public class PessoaService {
 
 	@Autowired
-	private PessoaRepository repositoryPessoa;
+	private PessoaRepository repository;
 	
 	public Pessoa buscar(Integer id) {
-		Optional<Pessoa> obj = repositoryPessoa.findById(id);
+		Optional<Pessoa> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Pessoa.class.getName()));
 	}
 	
@@ -33,18 +34,19 @@ public class PessoaService {
 	public Pessoa inserir(Pessoa obj) {
 		obj.setId(null);
 		try {
-			obj = repositoryPessoa.save(obj);
+			obj = repository.save(obj);
 		} catch (DataIntegrityViolationException err) {
 			throw new DataIntegrityException("CPF ja cadastrado");
 		}
 		return obj;
 	}
 	
+	@Transactional
 	public Pessoa atualizar(Pessoa obj) {
 		Pessoa newObj = buscar(obj.getId());
 		atualizarDados(newObj, obj);
 		try {
-			obj = repositoryPessoa.save(newObj);
+			obj = repository.save(newObj);
 		} catch (DataIntegrityViolationException err) {
 			throw new DataIntegrityException("CPF ja cadastrado");
 		}
@@ -54,7 +56,7 @@ public class PessoaService {
 	public void deletar(Integer id) {
 		buscar(id);
 		try {
-			repositoryPessoa.deleteById(id);
+			repository.deleteById(id);
 		} catch(DataIntegrityViolationException err) {
 			throw new DataIntegrityException("Nao eh possivel excluir");
 		}
@@ -62,17 +64,21 @@ public class PessoaService {
 	}
 	
 	public List<Pessoa> buscarTudo(){
-		return repositoryPessoa.findAll();
+		return repository.findAll();
 	}
 	
 	public Page<Pessoa> buscarPagina(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				orderBy);
-		return repositoryPessoa.findAll(pageRequest);
+		return repository.findAll(pageRequest);
 	}
 	
 	public Pessoa fromDTO(PessoaDTO objDto) {
 		return new Pessoa(objDto.getId(),objDto.getNome(), objDto.getIdade(), objDto.getCpf(), objDto.getTipo() != null ? TipoPessoa.toEnum(objDto.getTipo()) : null, objDto.getPerfil());
+	}
+	
+	public Pessoa fromDTO(PessoaNewDTO objDto) {
+		return new Pessoa(objDto.getId(),objDto.getNome(), objDto.getIdade(), objDto.getCpf(), TipoPessoa.toEnum(objDto.getTipo()), objDto.getPerfil());
 	}
 	
 	private void atualizarDados(Pessoa newObj, Pessoa obj) {

@@ -2,7 +2,8 @@ package com.jonatasvale.desafioapp.dto;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
@@ -12,35 +13,38 @@ import com.jonatasvale.desafioapp.domain.Pessoa;
 import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
 
 
-public class PessoaDTO implements Serializable {
+public class PessoaNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	
+	@NotEmpty(message="Preehchimento obrigatorio")
 	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
 	
-	@Max(value=150)
 	private Integer idade;
 
+	@NotEmpty(message="Preehchimento obrigatorio")
 	@CPF
 	@Length(min=11, max=11, message="O tamanho deve ser exatamente 11 caracteres")
 	private String cpf;
 	
+	@NotNull
 	private Integer tipo;
 	
+	@NotNull
 	private Perfil perfil;
 	
-	public PessoaDTO() {
+	public PessoaNewDTO() {
 		
 	}
 	
-	public PessoaDTO(Pessoa obj) {
+	public PessoaNewDTO(Pessoa obj) {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.idade = obj.getIdade();
 		this.cpf = obj.getCpf();
-		this.tipo = obj.getTipo() != null ? obj.getTipo().getCod() : null;		
+		this.tipo = obj.getTipo().getCod();		
 		this.perfil = obj.getPerfil();
 	}
 
@@ -61,7 +65,7 @@ public class PessoaDTO implements Serializable {
 	}
 
 	public String getTipo() {
-		return TipoPessoa.toEnum(tipo) != null ? TipoPessoa.toEnum(tipo).getDescricao() : null;
+		return TipoPessoa.toEnum(tipo).getDescricao();
 	}
 
 	public void setTipo(Integer tipo) {

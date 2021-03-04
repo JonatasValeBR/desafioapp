@@ -10,6 +10,7 @@ public enum TipoPessoa {
 		private int cod;
 		private String descricao;
 		
+		
 		private TipoPessoa(int cod, String descricao) {
 			this.cod = cod;
 			this.descricao = descricao;
@@ -35,5 +36,19 @@ public enum TipoPessoa {
 			}
 			
 			throw new IllegalArgumentException("Id invalido: " + cod);
+		}
+		
+		public static TipoPessoa toEnum(String nome) {
+			if (nome == null) {
+				return null;
+			}
+			
+			for (TipoPessoa x : TipoPessoa.values()) {
+				if (nome.equals(x.getDescricao())) {
+					return x;
+				}
+			}
+			
+			throw new IllegalArgumentException("Id invalido: " + nome);
 		}
 }

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jonatasvale.desafioapp.domain.Pessoa;
 import com.jonatasvale.desafioapp.dto.PessoaDTO;
-import com.jonatasvale.desafioapp.services.PerfilService;
+import com.jonatasvale.desafioapp.dto.PessoaNewDTO;
 import com.jonatasvale.desafioapp.services.PessoaService;
 
 @RestController
@@ -27,48 +27,40 @@ import com.jonatasvale.desafioapp.services.PessoaService;
 public class PessoaResource {
 
 	@Autowired
-	private PessoaService servicePessoa;
-	
-	@Autowired
-	private PerfilService servicePerfil;
+	private PessoaService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Pessoa> find(@PathVariable Integer id) {
-		Pessoa obj = servicePessoa.buscar(id);
+		Pessoa obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj); 
 	}
 	
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Pessoa obj) {
-		obj.setPerfil(servicePerfil.buscar(obj.getPerfil().getId()));
-		PessoaDTO objDTO = new PessoaDTO(obj);	
-		obj = servicePessoa.inserir(servicePessoa.fromDTO(objDTO));
+	public ResponseEntity<Void> insert(@Valid @RequestBody PessoaNewDTO objDTO) {
+		Pessoa obj = service.fromDTO(objDTO);
+		obj = service.inserir(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Pessoa obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody PessoaDTO objDTO, @PathVariable Integer id) {
+		Pessoa obj = service.fromDTO(objDTO);
 		obj.setId(id);
-		if (obj.getPerfil() != null) {
-			obj.setPerfil(servicePerfil.buscar(obj.getPerfil().getId()));
-		}
-		PessoaDTO objDTO = new PessoaDTO(obj);
-		obj = servicePessoa.atualizar(servicePessoa.fromDTO(objDTO));
+		obj = service.atualizar(obj);
 		return ResponseEntity.noContent().build();
-	}
-	
+	}	
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		servicePessoa.deletar(id);
+		service.deletar(id);
 		return ResponseEntity.noContent().build(); 
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<PessoaDTO>> findAll() {
-		List<Pessoa> list = servicePessoa.buscarTudo();
+		List<Pessoa> list = service.buscarTudo();
 		List<PessoaDTO> listDto = list.stream().map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto); 
 	}
@@ -79,7 +71,7 @@ public class PessoaResource {
 			@RequestParam(value="linesPerPage", defaultValue="24")Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome")String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC")String direction) {
-		Page<Pessoa> list = servicePessoa.buscarPagina(page, linesPerPage, orderBy, direction);
+		Page<Pessoa> list = service.buscarPagina(page, linesPerPage, orderBy, direction);
 		Page<PessoaDTO> listDto = list.map(obj -> new PessoaDTO(obj));
 		return ResponseEntity.ok().body(listDto); 
 	}

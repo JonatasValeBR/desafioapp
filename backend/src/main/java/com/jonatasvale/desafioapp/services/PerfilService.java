@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jonatasvale.desafioapp.domain.Perfil;
 import com.jonatasvale.desafioapp.dto.PerfilDTO;
@@ -24,14 +25,26 @@ public class PerfilService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Perfil.class.getName()));
 	}
 	
+	@Transactional
 	public Perfil inserir(Perfil obj) {
 		obj.setId(null);
-		return repository.save(obj);
+		try {
+			obj = repository.save(obj);
+		} catch (DataIntegrityViolationException err) {
+			throw new DataIntegrityException("Nome ja cadastrado");
+		}
+		return obj;
 	}
 	
+	@Transactional
 	public Perfil atualizar(Perfil obj) {
 		buscar(obj.getId());
-		return repository.save(obj);
+		try {
+			obj = repository.save(obj);
+		} catch (DataIntegrityViolationException err) {
+			throw new DataIntegrityException("Nome ja cadastrado");
+		}
+		return obj;
 	}
 	
 	public void deletar(Integer id) {
