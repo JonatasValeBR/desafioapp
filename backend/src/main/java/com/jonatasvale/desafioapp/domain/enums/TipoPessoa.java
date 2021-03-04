@@ -2,8 +2,10 @@ package com.jonatasvale.desafioapp.domain.enums;
 
 public enum TipoPessoa {
 
-		PESSOAFISICA(1, "Pessoa Fisica"),
-		PESSOAJURIDICA(2, "Pessoa Juridica");
+		DEVJUNIOR(1, "Desenvolvedor junior"),
+		DEVPLENO(2, "Desenvolvedor pleno"),
+		DEVSENIOR(3, "Desenvolvedor senior"),
+		DEVTRAINNER(4, "Desenvolvedor trainner");
 	
 		private int cod;
 		private String descricao;

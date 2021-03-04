@@ -2,16 +2,37 @@ package com.jonatasvale.desafioapp.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jonatasvale.desafioapp.domain.Perfil;
 import com.jonatasvale.desafioapp.domain.Pessoa;
+import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
+
 
 public class PessoaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message="Preehchimento obrigatorio")
+	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
+	
 	private Integer idade;
-	private String cpfOuCnpj;
+
+	@NotEmpty(message="Preehchimento obrigatorio")
+	@CPF
+	@Length(min=11, max=11, message="O tamanho deve ser exatamente 11 caracteres")
+	private String cpf;
+	
 	private Integer tipo;
+	
+	@NotEmpty(message="Preehchimento obrigatorio")
+	private Perfil perfil;
 	
 	public PessoaDTO() {
 		
@@ -21,8 +42,9 @@ public class PessoaDTO implements Serializable {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.idade = obj.getIdade();
-		this.cpfOuCnpj = obj.getCpfOuCnpj();
-		this.tipo = obj.getTipo().getCod();
+		this.cpf = obj.getCpf();
+		this.tipo = obj.getTipo() != null ? obj.getTipo().getCod() : null;		
+		this.perfil = obj.getPerfil();
 	}
 
 	public Integer getIdade() {
@@ -33,16 +55,21 @@ public class PessoaDTO implements Serializable {
 		this.idade = idade;
 	}
 
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
+	@JsonIgnore
 	public Integer getTipo() {
 		return tipo;
+	}
+	
+	public String getTipoNome() {
+		return TipoPessoa.toEnum(tipo).getDescricao();
 	}
 
 	public void setTipo(Integer tipo) {
@@ -63,6 +90,14 @@ public class PessoaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 	
 }

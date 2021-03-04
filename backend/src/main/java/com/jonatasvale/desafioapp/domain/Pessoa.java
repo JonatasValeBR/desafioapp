@@ -2,6 +2,7 @@ package com.jonatasvale.desafioapp.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,10 @@ public class Pessoa implements Serializable {
 	private Integer id;
 	private String nome;
 	private Integer idade;
-	private String cpfOuCnpj;
+	
+	@Column(unique=true)
+	private String cpf;
+	
 	private Integer tipo;
 	
 	@ManyToOne
@@ -31,13 +35,13 @@ public class Pessoa implements Serializable {
 		
 	}
 
-	public Pessoa(Integer id, String nome, Integer idade, String cpfOuCnpj, TipoPessoa tipo, Perfil perfil) {
+	public Pessoa(Integer id, String nome, Integer idade, String cpf, TipoPessoa tipo, Perfil perfil) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.idade = idade;
-		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.cpf = cpf;
+		this.tipo =  tipo != null ? tipo.getCod() : null ;
 		this.perfil = perfil;
 	}
 
@@ -65,12 +69,12 @@ public class Pessoa implements Serializable {
 		this.idade = idade;
 	}
 
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public TipoPessoa getTipo() {
