@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large">Adicionar pessoas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form formGroup="formGroup">
+  <ion-grid>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input clearInput name="nome" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Idade</ion-label>
+          <ion-input clearInput type="number" name="idade" inputmode="numeric"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">CPF</ion-label>
+          <ion-input clearInput type="text" inputmode="numeric"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="combo-box">
+      <ion-col size="0.5"></ion-col>
+      <ion-col >
+        <ion-radio-group value="biff">
+          <ion-list-header>
+            <ion-title>Tipo pessoa</ion-title>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Biff</ion-label>
+            <ion-radio slot="start" value="biff"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+    <ion-row class="check-box">
+      <ion-col size="0.5"></ion-col>
+      <ion-col >
+        <ion-list>
+          <ion-list-header>
+            <ion-title>Perfis</ion-title>
+          </ion-list-header>
+          <ion-item >
+            <ion-label>entry.val</ion-label>
+            <!--[(ngModel)]="entry.isChecked"-->
+            <ion-checkbox slot="end" ></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="botao-enviar">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+          <ion-button type="submit"expand="block" (click)="adicionaPessoa()">Enviar</ion-button>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</form>
+</ion-content>
