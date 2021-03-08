@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Perfil } from 'src/app/api/perfil.model';
+import { PerfilService } from 'src/app/api/perfil.service';
+import { AdicionarPessoa } from 'src/app/api/pessoa.model';
+import { PessoaService } from 'src/app/api/pessoa.service';
 
 @Component({
   selector: 'app-pessoas-add',
@@ -8,27 +12,68 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class PessoasAddPage implements OnInit {
 
+  authForm: FormGroup;
+  perfis: Perfil[];
+  pessoa: AdicionarPessoa;
 
-  formGroup: FormGroup;
+  constructor(private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService) {}
 
-  constructor(private formBuilder: FormBuilder) {
+  ngOnInit() {
+   this.criandoForm();
+  }
 
-    this.formGroup = this.formBuilder.group({
-      nome: new FormControl('teste', Validators.compose([
-        Validators.required,
-        Validators.minLength(5)
-      ])),
-      idade: ['1',[]],
-      cpf: ['',[]],
-      tipo: ['',[]],
-      perfil: ['',[]]
+  ionViewWillEnter(): void{
+    this.carregarCampos();
+  }
+
+  carregarCampos() {
+    this.servicePerfil.getPerfis().subscribe(response => {
+      this.perfis = response;
+    });
+  }
+
+  submitForm(){
+    console.log(this.authForm.value);
+    console.log(this.authForm.value.nome);
+
+    this.pessoa ={
+      nome: this.authForm.value.nome,
+      idade: this.authForm.value.idade,
+      cpf: this.authForm.value.cpf,
+      tipo: 1,
+      perfil: {
+        id: Number(this.authForm.value.perfil)
+      }
+    };
+    this.servicePessoa.postPessoas(this.pessoa).subscribe(response => {
+      console.log(response);
     })
   }
 
-  ngOnInit() {
+  get nome(): FormControl {
+    return <FormControl>this.authForm.get('nome');
+  }
+  get idade(): FormControl {
+    return <FormControl>this.authForm.get('idade');
+  }
+  get cpf(): FormControl {
+    return <FormControl>this.authForm.get('cpf');
+  }
+  get perfil(): FormControl {
+    return <FormControl>this.authForm.get('perfil');
+  }
+  get tipo(): FormControl {
+    return <FormControl>this.authForm.get('tipo');
   }
 
-  adicionaPessoa(){
-
+  private criandoForm(): void {
+    this.authForm = this.formBuilder.group({
+      nome: ['Teste', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]],
+      idade: ['12',[Validators.required, Validators.max(150)]],
+      cpf: ['79327348001',[Validators.required]],
+      perfil: ['1',[Validators.required]],
+      tipo: ['1',[Validators.required]]
+    })
   }
 }
+

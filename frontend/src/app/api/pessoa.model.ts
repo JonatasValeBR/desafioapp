@@ -40,7 +40,7 @@ export interface FiltroPessoa {
   empty: boolean
 }
 
-export interface Pessoa {
+export interface VisualizarPessoa {
   id: number,
   nome: string,
   idade: number,
@@ -55,5 +55,15 @@ export interface Pessoa {
         nome: string
       }
     ]
+  }
+}
+
+export interface AdicionarPessoa {
+  nome: string,
+  idade: number,
+  cpf: string,
+  tipo: number,
+  perfil: {
+    id: number
   }
 }

@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form formGroup="formGroup">
+  <form [formGroup]="authForm" (ngSubmit)="submitForm()">
   <ion-grid>
 
     <ion-row class="linha-input">
@@ -13,7 +13,12 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating">Nome</ion-label>
-          <ion-input clearInput name="nome" type="text"></ion-input>
+          <ion-input clearInput formControlName="nome" type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none" *ngIf="nome.dirty && ( nome.hasError('required') || nome.hasError('minlength') || nome.hasError('maxlength') )">
+          <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('required')">Campo obrigatório</ion-note>
+          <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('minlength')">Mínimo 5 caracteres</ion-note>
+          <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('maxlength')">Máximo 80 caracteres</ion-note>
         </ion-item>
       </ion-col>
       <ion-col size="0"></ion-col>
@@ -24,7 +29,11 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating">Idade</ion-label>
-          <ion-input clearInput type="number" name="idade" inputmode="numeric"></ion-input>
+          <ion-input type="number" clearInput formControlName="idade" inputmode="numeric"></ion-input>
+        </ion-item>
+        <ion-item lines="none" *ngIf="idade.dirty && ( idade.hasError('required') || idade.hasError('max'))">
+          <ion-note color="danger" *ngIf="idade.dirty && idade.hasError('required')">Campo obrigatório</ion-note>
+          <ion-note color="danger" *ngIf="idade.dirty && idade.hasError('max')">Valor máximo 150</ion-note>
         </ion-item>
       </ion-col>
       <ion-col size="0"></ion-col>
@@ -35,48 +44,65 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating">CPF</ion-label>
-          <ion-input clearInput type="text" inputmode="numeric"></ion-input>
+          <ion-input clearInput type="text" formControlName="cpf" inputmode="numeric"></ion-input>
         </ion-item>
+        <ion-item lines="none" *ngIf="cpf.dirty && cpf.hasError('required')">
+          <ion-note color="danger">Campo obrigatório</ion-note>
+        </ion-item>
+        <ion-note slot="end" color="danger" *ngIf="cpf.dirty && cpf.hasError('required')">Required</ion-note>
       </ion-col>
       <ion-col size="0"></ion-col>
     </ion-row>
-
     <ion-row class="combo-box">
       <ion-col size="0.5"></ion-col>
       <ion-col >
-        <ion-radio-group value="biff">
-          <ion-list-header>
-            <ion-title>Tipo pessoa</ion-title>
-          </ion-list-header>
-          <ion-item>
-            <ion-label>Biff</ion-label>
-            <ion-radio slot="start" value="biff"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-col>
-      <ion-col size="0"></ion-col>
-    </ion-row>
-    <ion-row class="check-box">
-      <ion-col size="0.5"></ion-col>
-      <ion-col >
         <ion-list>
-          <ion-list-header>
-            <ion-title>Perfis</ion-title>
-          </ion-list-header>
-          <ion-item >
-            <ion-label>entry.val</ion-label>
-            <!--[(ngModel)]="entry.isChecked"-->
-            <ion-checkbox slot="end" ></ion-checkbox>
-          </ion-item>
+          <ion-radio-group formControlName="perfil" value="">
+            <ion-list-header>
+              <ion-title>Perfil</ion-title>
+            </ion-list-header>
+            <ion-item *ngFor="let perfil of perfis">
+              <ion-label>{{perfil.nome}}</ion-label>
+              <ion-radio slot="start" value="{{perfil.id}}"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
         </ion-list>
       </ion-col>
       <ion-col size="0"></ion-col>
     </ion-row>
-
+    <ion-row class="combo-box">
+      <ion-col size="0.5"></ion-col>
+      <ion-col >
+        <ion-list>
+          <ion-radio-group formControlName="tipo">
+            <ion-list-header>
+              <ion-title>Tipo</ion-title>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Desenvolvedor trainner</ion-label>
+              <ion-radio slot="start" value="0"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Desenvolvedor junior</ion-label>
+              <ion-radio slot="start" value="1"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Desenvolvedor pleno</ion-label>
+              <ion-radio slot="start" value="2"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Desenvolvedor senior</ion-label>
+              <ion-radio slot="start" value="3"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
     <ion-row class="botao-enviar">
       <ion-col size="0.5"></ion-col>
       <ion-col>
-          <ion-button type="submit"expand="block" (click)="adicionaPessoa()">Enviar</ion-button>
+          <ion-button type="submit" expand="block" [disabled]="authForm.invalid">Enviar</ion-button>
       </ion-col>
       <ion-col size="0"></ion-col>
     </ion-row>

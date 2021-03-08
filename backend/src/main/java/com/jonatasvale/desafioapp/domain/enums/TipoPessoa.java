@@ -1,11 +1,12 @@
 package com.jonatasvale.desafioapp.domain.enums;
 
 public enum TipoPessoa {
-
+		
+		DEVTRAINNER(0, "Desenvolvedor trainner"),
 		DEVJUNIOR(1, "Desenvolvedor junior"),
 		DEVPLENO(2, "Desenvolvedor pleno"),
-		DEVSENIOR(3, "Desenvolvedor senior"),
-		DEVTRAINNER(4, "Desenvolvedor trainner");
+		DEVSENIOR(3, "Desenvolvedor senior");
+		
 	
 		private int cod;
 		private String descricao;

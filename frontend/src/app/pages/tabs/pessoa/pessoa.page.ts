@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { PessoaService} from 'src/app/api/pessoa.service';
-import { Pessoa, FiltroPessoa } from 'src/app/api/pessoa.model';
+import { VisualizarPessoa, FiltroPessoa } from 'src/app/api/pessoa.model';
 
 @Component({
   selector: 'app-pessoa',
@@ -13,22 +13,25 @@ export class PessoaPage implements OnInit {
   constructor(private service: PessoaService) { }
 
   filtroPessoa: FiltroPessoa;
-  pessoas: Pessoa[];
+  pessoas: VisualizarPessoa[];
   scroll = false;
 
   ngOnInit(): void {
   }
-
-  ionViewWillEnter(): void{
-    this.addMoreItems()
+  ionChange(){
+    console.log("alterou o bagulho");
   }
 
-  addMoreItems(): void{
-    this.service.getPessoas().subscribe(response => {
-      this.filtroPessoa = response;
-      this.pessoas = this.filtroPessoa['content'];
-      console.log(this.pessoas);
-    });
+  editarPessoa(id: number): void{
+    console.log(id);
+  }
+
+  excluirPessoa(id: number): void{
+    console.log(id);
+  }
+
+  visualizarPessoa(id: number): void{
+    console.log(id);
   }
 
   toggleInfiniteScroll(): void {
@@ -49,20 +52,15 @@ export class PessoaPage implements OnInit {
     }, 500);
   }
 
-  ionChange(){
-    console.log("alterou o bagulho");
+  ionViewWillEnter(): void{
+    this.addMoreItems()
   }
 
-  editarPessoa(id: number): void{
-    console.log(id);
+  addMoreItems(): void{
+    this.service.getPessoas().subscribe(response => {
+      this.filtroPessoa = response;
+      this.pessoas = this.filtroPessoa['content'];
+      console.log(this.pessoas);
+    });
   }
-
-  excluirPessoa(id: number): void{
-    console.log(id);
-  }
-
-  visualizarPessoa(id: number): void{
-    console.log(id);
-  }
-
 }

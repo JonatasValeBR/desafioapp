@@ -1,9 +1,57 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>perfil</ion-title>
+    <ion-title>Gerenciar Perfis</ion-title>
   </ion-toolbar>
 </ion-header>
+<!--<ion-button (click)="toggleInfiniteScroll()" expand="block">
+  Toggle Infinite Scroll
+</ion-button>-->
+<ion-content >
+  <ion-grid>
 
-<ion-content>
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col>
+        <h1>Lista Perfis</h1>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col size="1"></ion-col>
+      <ion-col>
+        <ion-text>Arraste os itens para editar ou excluir</ion-text>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <ion-searchbar animated debounce="500"></ion-searchbar>
+
+    <ion-item-sliding *ngFor="let perfil of perfis">
+      <ion-item class="list">
+        <ion-icon name="ribbon-outline" slot="start"></ion-icon>
+        <ion-label>{{perfil.nome}}</ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <!--(click)="unread(item)"-->
+        <ion-item-option color="warning" (click)="editarPerfil(perfil.id)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-item-option>
+        <!--(click)="unread(item)"-->
+        <ion-item-option color="danger" (click)="excluirPerfil(perfil.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="tertiary" (click)="visualizarPerfil(perfil.id)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-infinite-scroll threshold="15%" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Carregando mais dados...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

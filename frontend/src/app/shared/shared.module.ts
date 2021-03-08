@@ -5,9 +5,9 @@ import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   exports: [
-    IonicModule,
     CommonModule,
     ReactiveFormsModule,
+    IonicModule,
   ]
 })
 export class SharedModule { }

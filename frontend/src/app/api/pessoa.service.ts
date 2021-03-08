@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {map, catchError} from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 import { API_CONFIG } from '../core/api.config';
-import { FiltroPessoa } from './pessoa.model';
+import { FiltroPessoa, AdicionarPessoa } from './pessoa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,15 @@ export class PessoaService {
     }
 
     return this.http.get<FiltroPessoa>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  postPessoas(pessoa: AdicionarPessoa): Observable<AdicionarPessoa> {
+    const url = `${this.urlBase}`;
+
+    return this.http.post<AdicionarPessoa>(url,pessoa).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e))
     );
