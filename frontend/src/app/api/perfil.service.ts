@@ -14,7 +14,7 @@ export class PerfilService {
 
   private urlBase : string =  API_CONFIG.baseUrl + "/api/perfis";
 
-  getPerfis(page?: number, linesPerPage?: number, orderBy?:string, direction?:string): Observable<Perfil[]> {
+  getPerfis(): Observable<Perfil[]> {
     const url = `${this.urlBase}`;
 
     return this.http.get<Perfil[]>(url).pipe(

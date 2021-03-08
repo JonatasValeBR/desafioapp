@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll} from '@ionic/angular';
 import { PessoaService} from 'src/app/api/pessoa.service';
 import { VisualizarPessoa, FiltroPessoa } from 'src/app/api/pessoa.model';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-pessoa',
@@ -10,7 +11,7 @@ import { VisualizarPessoa, FiltroPessoa } from 'src/app/api/pessoa.model';
 })
 export class PessoaPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  constructor(private service: PessoaService) { }
+  constructor(private service: PessoaService, private alert: AlertService) { }
 
   filtroPessoa: FiltroPessoa;
   pessoas: VisualizarPessoa[];
@@ -22,16 +23,15 @@ export class PessoaPage implements OnInit {
     console.log("alterou o bagulho");
   }
 
-  editarPessoa(id: number): void{
-    console.log(id);
-  }
-
-  excluirPessoa(id: number): void{
-    console.log(id);
-  }
-
-  visualizarPessoa(id: number): void{
-    console.log(id);
+  deletarPessoa(id: number){
+    this.alert.presentAlertConfirm('Atenção!','Voce esta preste a excluir uma pessoa, voce deseja realizar essa operacao ?')
+    .then((res:any)=>{
+      if(res.role  === 'okay'){
+        this.service.deletePessoas(id).subscribe(response => {
+          console.log(response);
+        })
+      }
+    });
   }
 
   toggleInfiniteScroll(): void {

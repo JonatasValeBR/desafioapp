@@ -17,18 +17,6 @@ export class PerfilPage implements OnInit {
   ngOnInit() {
   }
 
-  editarPerfil(id: number): void{
-    console.log(id);
-  }
-
-  excluirPerfil(id: number): void{
-    console.log(id);
-  }
-
-  visualizarPerfil(id: number): void{
-    console.log(id);
-  }
-
   ionViewWillEnter(): void{
     this.addMoreItems()
   }

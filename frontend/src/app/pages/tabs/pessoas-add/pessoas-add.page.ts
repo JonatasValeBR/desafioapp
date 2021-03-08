@@ -47,7 +47,7 @@ export class PessoasAddPage implements OnInit {
     };
     this.servicePessoa.postPessoas(this.pessoa).subscribe(response => {
       console.log(response);
-    })
+    });
   }
 
   get nome(): FormControl {

@@ -2,6 +2,7 @@ package com.jonatasvale.desafioapp.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -55,6 +56,13 @@ public class AplicativoResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.deletar(id);
 		return ResponseEntity.noContent().build(); 
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<AplicativoDTO>> findAll() {
+		List<Aplicativo> list = service.buscarTudo();
+		List<AplicativoDTO> listDto = list.stream().map(obj -> new AplicativoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto); 
 	}
 	
 	@RequestMapping(value="/page",method=RequestMethod.GET)

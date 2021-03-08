@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large">Adicionar aplicativo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+  <ion-grid>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input clearInput formControlName="nome" type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none" *ngIf="nome.dirty && ( nome.hasError('required') || nome.hasError('minlength') || nome.hasError('maxlength') )">
+          <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('required')">Campo obrigatório</ion-note>
+          <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('minlength')">Mínimo 5 caracteres</ion-note>
+          <ion-note color="danger" *ngIf="nome.dirty && nome.hasError('maxlength')">Máximo 80 caracteres</ion-note>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+    <ion-row class="botao-enviar">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+          <ion-button type="submit" expand="block" [disabled]="authForm.invalid">Enviar</ion-button>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</form>
+</ion-content>

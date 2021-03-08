@@ -3,6 +3,11 @@ ion-header {
   text-align: center;
 }
 
+ion-header ion-title {
+  font-size: 1.85em;
+  text-align: center;
+}
+
 .linha-input ion-label{
   font-size: 1.5em;
 }

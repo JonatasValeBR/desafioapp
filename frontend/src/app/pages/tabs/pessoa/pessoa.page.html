@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Gerenciar Pessoas</ion-title>
+    <ion-title size="large">Gerenciar Pessoas</ion-title>
   </ion-toolbar>
 </ion-header>
 <!--<ion-button (click)="toggleInfiniteScroll()" expand="block">
@@ -16,10 +16,10 @@
       </ion-col>
       <ion-col size="2"></ion-col>
     </ion-row>
-    <ion-row >
+    <ion-row class="descricao">
       <ion-col size="1"></ion-col>
       <ion-col>
-        <ion-text>Arraste os itens para editar ou excluir </ion-text>
+        <ion-text><p><ion-icon name="swap-horizontal-outline"></ion-icon> Arraste os itens para visualizar, editar e excluir.</p></ion-text>
       </ion-col>
       <ion-col size="1"></ion-col>
     </ion-row>
@@ -34,14 +34,16 @@
       </ion-item>
       <ion-item-options side="end">
         <!--(click)="unread(item)"-->
-        <ion-item-option color="warning" (click)="editarPessoa(pessoa.id)">
+        <ion-item-option color="warning">
           <ion-icon name="create-outline"></ion-icon>
         </ion-item-option>
         <!--(click)="unread(item)"-->
-        <ion-item-option color="danger" (click)="excluirPessoa(pessoa.id)">
-          <ion-icon name="trash-outline"></ion-icon>
+        <ion-item-option color="danger" >
+          <ion-icon name="trash-outline" (click)="deletarPessoa(pessoa.id)"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="tertiary" (click)="visualizarPessoa(pessoa.id)">
+      </ion-item-options>
+      <ion-item-options side="start">
+        <ion-item-option color="tertiary">
           <ion-icon name="eye-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>

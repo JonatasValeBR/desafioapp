@@ -44,6 +44,15 @@ export class PessoaService {
     );
   }
 
+  deletePessoas(id: number): Observable<any> {
+    const url = `${this.urlBase}/${id}`;
+
+    return this.http.delete<any>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
   private errorHandler(e: any): Observable<any>{
 
     console.log("Error ao acessar o servidor");

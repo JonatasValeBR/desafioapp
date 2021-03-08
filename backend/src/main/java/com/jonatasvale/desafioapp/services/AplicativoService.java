@@ -65,6 +65,11 @@ public class AplicativoService {
 		
 	}
 	
+	public List<Aplicativo> buscarTudo(){
+		return repositoryAplicativo.findAll();
+	}
+	
+	
 	public Page<Aplicativo> buscarPagina(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
 		return repositoryAplicativo.findAll(pageRequest);
