@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {map, catchError} from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 import { API_CONFIG } from '../core/api.config';
-import { FiltroPessoa, AdicionarPessoa } from './pessoa.model';
+import { FiltroPessoa, AdicionarPessoa, EditarPessoa, TipoPessoa } from './pessoa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,18 @@ export class PessoaService {
   private urlBase : string =  API_CONFIG.baseUrl + "/api/pessoas";
 
   getPessoas(page?: number, linesPerPage?: number, orderBy?:string, direction?:string): Observable<FiltroPessoa> {
-    const url = `${this.urlBase}/page`;
-
+    let url = `${this.urlBase}/page`;
     if (page!=null) {
-      url.concat(`?page=${page}`);
+      url = url.concat(`?page=${page}`);
     }
     if (linesPerPage!=null){
-      url.concat(`&linesPerPage=${linesPerPage}`);
+      url = url.concat(`&linesPerPage=${linesPerPage}`);
     }
     if (orderBy!=null){
-      url.concat(`?orderBy=${orderBy}`);
+      url = url.concat(`&orderBy=${orderBy}`);
     }
     if (direction!=null){
-      url.concat(`?direction=${direction}`);
+      url = url.concat(`&direction=${direction}`);
     }
 
     return this.http.get<FiltroPessoa>(url).pipe(
@@ -39,6 +38,33 @@ export class PessoaService {
     const url = `${this.urlBase}`;
 
     return this.http.post<AdicionarPessoa>(url,pessoa).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  getPessoasByID(id: number): Observable<EditarPessoa> {
+    const url = `${this.urlBase}/${id}`;
+
+    return this.http.get<EditarPessoa>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  putPessoas(pessoa: EditarPessoa): Observable<EditarPessoa> {
+    const url = `${this.urlBase}/${pessoa.id}`;
+
+    return this.http.put<EditarPessoa>(url,pessoa).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  getTipoPessoa(): Observable<TipoPessoa[]> {
+    const url = `${this.urlBase}/tipo`;
+
+    return this.http.get<TipoPessoa[]>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e))
     );

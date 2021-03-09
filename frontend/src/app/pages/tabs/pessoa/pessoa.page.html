@@ -6,75 +6,111 @@
 <!--<ion-button (click)="toggleInfiniteScroll()" expand="block">
   Toggle Infinite Scroll
 </ion-button>-->
-<ion-content >
-  <ion-grid>
+<ion-content>
+    <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="300" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-down-outline"
+        pullingText="Puxe para atualizar"
+        refreshingSpinner="circles"
+        refreshingText="Atualizando...">
+    </ion-refresher-content>
+    </ion-refresher>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2"></ion-col>
+          <ion-col>
+            <h1>Lista Pessoas</h1>
+          </ion-col>
+          <ion-col size="2"></ion-col>
+        </ion-row>
+        <ion-row class="descricao">
+          <ion-col size="1"></ion-col>
+          <ion-col>
+            <ion-text ><p><ion-icon name="swap-horizontal-outline"></ion-icon> Arraste os itens para visualizar, editar e excluir.</p></ion-text>
+          </ion-col>
+          <ion-col size="1"></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="1"></ion-col>
+          <ion-col>
+            <ion-segment (ionChange)="orderChanged($event)" value="nome">
+              <ion-segment-button value="nome">
+                <ion-label>Nome</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="cpf">
+                <ion-label>CPF</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="idade">
+                <ion-label>Idade</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+          <ion-col size="1"></ion-col>
+        </ion-row>
+        <ion-row class="descricao">
+          <ion-col size="2"></ion-col>
+          <ion-col>
+            <ion-segment scrollable value="ASC" (ionChange)="directionChanged($event)">
+              <ion-segment-button value="ASC">
+                <ion-icon name="chevron-down-outline"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="DESC">
+                <ion-icon name="chevron-up-outline"></ion-icon>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+          <ion-col size="2"></ion-col>
+        </ion-row>
 
-    <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col>
-        <h1>Lista Pessoas</h1>
-      </ion-col>
-      <ion-col size="2"></ion-col>
-    </ion-row>
-    <ion-row class="descricao">
-      <ion-col size="1"></ion-col>
-      <ion-col>
-        <ion-text><p><ion-icon name="swap-horizontal-outline"></ion-icon> Arraste os itens para visualizar, editar e excluir.</p></ion-text>
-      </ion-col>
-      <ion-col size="1"></ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-list>
-    <ion-searchbar animated debounce="500"></ion-searchbar>
-
-    <ion-item-sliding *ngFor="let pessoa of pessoas">
-      <ion-item>
-        <ion-icon class="icon-lista"name="person-outline" slot="start"></ion-icon>
-        <ion-label class="item-lista">{{pessoa.nome}}</ion-label>
-      </ion-item>
-      <ion-item-options side="end">
-        <!--(click)="unread(item)"-->
-        <ion-item-option color="warning">
-          <ion-icon name="create-outline"></ion-icon>
-        </ion-item-option>
-        <!--(click)="unread(item)"-->
-        <ion-item-option color="danger" >
-          <ion-icon name="trash-outline" (click)="deletarPessoa(pessoa.id)"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-      <ion-item-options side="start">
-        <ion-item-option color="tertiary">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-  <ion-infinite-scroll threshold="15%" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Carregando mais dados...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button color="light">
-      <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
-      <ion-icon md="caret-back" ios="chevron-up-circle-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="start">
-      <ion-fab-button (click)="toggleInfiniteScroll()" color="light">
-        <ion-icon name="lock-closed-outline" *ngIf="!scroll"></ion-icon>
-        <ion-icon name="lock-open-outline" *ngIf="scroll"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="arrow-up-circle-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-    <ion-fab-list side="top">
-      <ion-fab-button color="light" routerLink="/tabs/menu/pessoa/add">
-        <ion-icon name="add-circle-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
+      </ion-grid>
+      <ion-list style="margin-top: 0;">
+        <ion-searchbar animated debounce="500" (ionInput)="filterList($event)"></ion-searchbar>
+        <ion-item-sliding *ngFor="let pessoa of pessoas">
+          <ion-item>
+            <ion-icon class="icon-lista"name="person-outline" slot="start"></ion-icon>
+            <ion-label class="item-lista">{{pessoa.nome}}</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <!--(click)="unread(item)"-->
+            <ion-item-option color="warning">
+              <ion-icon name="create-outline" routerLink="/tabs/menu/pessoa/edit/{{pessoa.id}}"></ion-icon>
+            </ion-item-option>
+            <!--(click)="unread(item)"-->
+            <ion-item-option color="danger" >
+              <ion-icon name="trash-outline" (click)="deletarPessoa(pessoa.id)"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+          <ion-item-options side="start">
+            <ion-item-option color="tertiary">
+              <ion-icon name="eye-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      <ion-infinite-scroll threshold="5%" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="Carregando mais dados...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button color="light">
+          <ion-icon md="caret-back" ios="chevron-back-circle-outline"></ion-icon>
+          <ion-icon md="caret-back" ios="chevron-up-circle-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="start">
+          <ion-fab-button (click)="toggleInfiniteScroll()" color="light">
+            <ion-icon name="lock-closed-outline" *ngIf="!scroll"></ion-icon>
+            <ion-icon name="lock-open-outline" *ngIf="scroll"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="light">
+            <ion-icon name="arrow-up-circle-outline" (click)="scrollToTop()"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+        <ion-fab-list side="top">
+          <ion-fab-button color="light" routerLink="/tabs/menu/pessoa/add">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
 </ion-content>

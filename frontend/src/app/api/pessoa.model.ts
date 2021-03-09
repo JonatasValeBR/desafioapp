@@ -67,3 +67,19 @@ export interface AdicionarPessoa {
     id: number
   }
 }
+
+export interface EditarPessoa {
+  id: number,
+  nome: string,
+  idade: number,
+  cpf: string,
+  tipo: number,
+  perfil: {
+    id: number
+  }
+}
+
+export interface TipoPessoa {
+  cod: number,
+  descricao: string
+}

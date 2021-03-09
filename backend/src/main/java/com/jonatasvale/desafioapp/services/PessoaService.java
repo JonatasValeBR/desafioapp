@@ -63,6 +63,10 @@ public class PessoaService {
 		
 	}
 	
+	public TipoPessoa[] buscarENUM(){
+		return TipoPessoa.values();
+	}
+	
 	public List<Pessoa> buscarTudo(){
 		return repository.findAll();
 	}

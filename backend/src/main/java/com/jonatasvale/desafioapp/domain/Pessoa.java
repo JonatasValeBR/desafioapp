@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
 
 @Entity
@@ -25,6 +26,7 @@ public class Pessoa implements Serializable {
 	@Column(unique=true)
 	private String cpf;
 	
+	@JsonFormat(shape = JsonFormat.Shape.NUMBER)
 	private Integer tipo;
 	
 	@ManyToOne

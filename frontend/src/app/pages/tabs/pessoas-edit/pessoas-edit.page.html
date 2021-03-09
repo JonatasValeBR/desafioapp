@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title size="large">Adicionar pessoa</ion-title>
+    <ion-title size="large">Editar pessoa</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -53,40 +53,40 @@
       </ion-col>
       <ion-col size="0"></ion-col>
     </ion-row>
-    <ion-row class="combo-box">
-      <ion-col size="0.5"></ion-col>
-      <ion-col >
-        <ion-list>
-          <ion-radio-group formControlName="perfil" value="">
-            <ion-list-header>
-              <ion-title>Perfil</ion-title>
-            </ion-list-header>
-            <ion-item *ngFor="let perfil of perfis">
-              <ion-label>{{perfil.nome}}</ion-label>
-              <ion-radio slot="start" value="{{perfil.id}}"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
-      </ion-col>
-      <ion-col size="0"></ion-col>
-    </ion-row>
-    <ion-row class="combo-box">
-      <ion-col size="0.5"></ion-col>
-      <ion-col >
-        <ion-list>
-          <ion-radio-group formControlName="tipo">
-            <ion-list-header>
-              <ion-title>Tipo</ion-title>
-            </ion-list-header>
-            <ion-item *ngFor="let tipo of tipos">
-              <ion-label>{{tipo.descricao}}</ion-label>
-              <ion-radio slot="start" value="{{tipo.cod}}"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
-      </ion-col>
-      <ion-col size="0"></ion-col>
-    </ion-row>
+      <ion-row class="combo-box" >
+        <ion-col size="0.5"></ion-col>
+        <ion-col >
+          <ion-list>
+            <ion-radio-group formControlName="perfil" value="{{this.pessoa.perfil.id}}">
+              <ion-list-header>
+                <ion-title>Perfil</ion-title>
+              </ion-list-header>
+              <ion-item *ngFor="let perfil of perfis">
+                <ion-label>{{perfil.nome}}</ion-label>
+                <ion-radio slot="start" value="{{perfil.id}}"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+        <ion-col size="0"></ion-col>
+      </ion-row>
+      <ion-row class="combo-box">
+        <ion-col size="0.5"></ion-col>
+        <ion-col >
+          <ion-list>
+            <ion-radio-group formControlName="tipo" value="{{this.pessoa.tipo}}">
+              <ion-list-header>
+                <ion-title>Tipo</ion-title>
+              </ion-list-header>
+              <ion-item *ngFor="let tipo of tipos">
+                <ion-label>{{tipo.descricao}}</ion-label>
+                <ion-radio slot="start" value="{{tipo.cod}}"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+        <ion-col size="0"></ion-col>
+      </ion-row>
     <ion-row class="botao-enviar">
       <ion-col size="0.5"></ion-col>
       <ion-col>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Aplicativo } from 'src/app/api/aplicativo.model';
+import { Aplicativo, FiltroAplicativo } from 'src/app/api/aplicativo.model';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -13,10 +13,14 @@ export class AplicativoPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   constructor(private service: AplicativoService, private alert: AlertService) { }
 
+  filtroAplicativo: FiltroAplicativo;
   aplicativos: Aplicativo[];
   scroll = false;
 
   ngOnInit(): void {
+    this.aplicativos = [];
+    this.filtroAplicativo = null;
+    this.addMoreItems()
   }
   ionChange(){
     console.log("alterou o bagulho");
@@ -42,23 +46,29 @@ export class AplicativoPage implements OnInit {
     setTimeout(() => {
       console.log('Done');
       event.target.complete();
-      this.addMoreItems();
-
-      /*if (this.pessoa. == 1000) {
+      if (this.filtroAplicativo.last != true){
+        this.addMoreItems(this.filtroAplicativo.number+1);
+      } else {
         event.target.disabled = true;
-      }*/
+      }
 
     }, 500);
   }
 
-  ionViewWillEnter(): void{
-    this.addMoreItems()
+  setFiltroAplicativo(filtro: FiltroAplicativo): void{
+    this.filtroAplicativo = filtro;
   }
 
-  addMoreItems(): void{
-    this.service.getAplicativos().subscribe(response => {
-      this.aplicativos = response;
-      console.log(this.aplicativos);
+  setAplicativos(aplicativos: Aplicativo[]): void{
+    aplicativos.forEach(element => {
+      this.aplicativos.push(element);
+    });
+  }
+
+  addMoreItems(page?: number, linesPerPage?: number, orderBy?:string, direction?:string): void{
+    this.service.getAplicativos(page, linesPerPage, orderBy, direction).subscribe(response => {
+      this.setFiltroAplicativo(response);
+      this.setAplicativos(response['content']);
     });
   }
 }

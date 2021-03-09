@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jonatasvale.desafioapp.domain.Pessoa;
+import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
 import com.jonatasvale.desafioapp.dto.PessoaDTO;
 import com.jonatasvale.desafioapp.dto.PessoaNewDTO;
 import com.jonatasvale.desafioapp.services.PessoaService;
@@ -33,6 +34,11 @@ public class PessoaResource {
 	public ResponseEntity<Pessoa> find(@PathVariable Integer id) {
 		Pessoa obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj); 
+	}
+	
+	@RequestMapping(value="/tipo",method=RequestMethod.GET)
+	public ResponseEntity<TipoPessoa[]> buscarENUM() {
+		return ResponseEntity.ok().body(service.buscarENUM()); 
 	}
 	
 	
@@ -68,7 +74,7 @@ public class PessoaResource {
 	@RequestMapping(value="/page",method=RequestMethod.GET)
 	public ResponseEntity<Page<PessoaDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
-			@RequestParam(value="linesPerPage", defaultValue="24")Integer linesPerPage, 
+			@RequestParam(value="linesPerPage", defaultValue="6")Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome")String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC")String direction) {
 		Page<Pessoa> list = service.buscarPagina(page, linesPerPage, orderBy, direction);

@@ -19,6 +19,10 @@ const routes: Routes = [
             path:'add',
             loadChildren: () => import('../pessoas-add/pessoas-add.module').then( m => m.PessoasAddPageModule)
           },
+          {
+            path:'edit/:id',
+            loadChildren: () => import('../pessoas-edit/pessoas-edit.module').then( m => m.PessoasEditPageModule)
+          }
         ]
       },
       {

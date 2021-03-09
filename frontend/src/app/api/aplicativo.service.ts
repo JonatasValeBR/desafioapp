@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
-import { Aplicativo, AdicionarAplicativo } from './aplicativo.model';
+import { Aplicativo, AdicionarAplicativo, FiltroAplicativo } from './aplicativo.model';
 import { map, catchError } from 'rxjs/operators';
 import { API_CONFIG } from '../core/api.config';
 
@@ -14,12 +14,24 @@ export class AplicativoService {
 
   private urlBase : string =  API_CONFIG.baseUrl + "/api/aplicativos";
 
-  getAplicativos(): Observable<Aplicativo[]> {
-    const url = `${this.urlBase}`;
+  getAplicativos(page?: number, linesPerPage?: number, orderBy?:string, direction?:string): Observable<FiltroAplicativo> {
+    let url = `${this.urlBase}/page`;
+    if (page!=null) {
+      url = url.concat(`?page=${page}`);
+    }
+    if (linesPerPage!=null){
+      url = url.concat(`&linesPerPage=${linesPerPage}`);
+    }
+    if (orderBy!=null){
+      url = url.concat(`&orderBy=${orderBy}`);
+    }
+    if (direction!=null){
+      url = url.concat(`&direction=${direction}`);
+    }
 
-    return this.http.get<Aplicativo[]>(url).pipe(
+    return this.http.get<FiltroAplicativo>(url).pipe(
       map(obj => obj),
-      catchError((e) => this.errorHandler(e))
+      catchError(e => this.errorHandler(e))
     );
   }
 

@@ -1,5 +1,8 @@
 package com.jonatasvale.desafioapp.domain.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TipoPessoa {
 		
 		DEVTRAINNER(0, "Desenvolvedor trainner"),
