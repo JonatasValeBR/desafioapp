@@ -21,6 +21,7 @@ import com.jonatasvale.desafioapp.domain.Pessoa;
 import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
 import com.jonatasvale.desafioapp.dto.PessoaDTO;
 import com.jonatasvale.desafioapp.dto.PessoaNewDTO;
+import com.jonatasvale.desafioapp.resources.utils.URL;
 import com.jonatasvale.desafioapp.services.PessoaService;
 
 @RestController
@@ -39,6 +40,11 @@ public class PessoaResource {
 	@RequestMapping(value="/tipo",method=RequestMethod.GET)
 	public ResponseEntity<TipoPessoa[]> buscarENUM() {
 		return ResponseEntity.ok().body(service.buscarENUM()); 
+	}
+	
+	@RequestMapping(value="/tipo/{id}",method=RequestMethod.GET)
+	public ResponseEntity<TipoPessoa> buscarENUMbyID(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(service.buscarENUMbyID(id)); 
 	}
 	
 	
@@ -79,6 +85,17 @@ public class PessoaResource {
 			@RequestParam(value="direction", defaultValue="ASC")String direction) {
 		Page<Pessoa> list = service.buscarPagina(page, linesPerPage, orderBy, direction);
 		Page<PessoaDTO> listDto = list.map(obj -> new PessoaDTO(obj));
+		return ResponseEntity.ok().body(listDto); 
+	}
+	
+	@RequestMapping(value="perfis",method=RequestMethod.GET)
+	public ResponseEntity<List<PessoaDTO>> findPerfis(
+			@RequestParam(value="nome", defaultValue="") String nome, 
+			@RequestParam(value="perfis", defaultValue="")String perfis) 
+	{
+		List<Integer> ids = URL.decodeIntList(perfis);
+		List<Pessoa> list = service.buscarPerfis(nome, ids);
+		List<PessoaDTO> listDto = list.stream().map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto); 
 	}
 }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {map, catchError} from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 import { API_CONFIG } from '../core/api.config';
-import { FiltroPessoa, AdicionarPessoa, EditarPessoa, TipoPessoa } from './pessoa.model';
+import { FiltroPessoa, AdicionarPessoa, EditarPessoa, TipoPessoa, VisualizarPessoa } from './pessoa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,15 @@ export class PessoaService {
     );
   }
 
+  getPessoaByID(id: number): Observable<VisualizarPessoa> {
+    const url = `${this.urlBase}/${id}`;
+
+    return this.http.get<VisualizarPessoa>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
   putPessoas(pessoa: EditarPessoa): Observable<EditarPessoa> {
     const url = `${this.urlBase}/${pessoa.id}`;
 
@@ -65,6 +74,15 @@ export class PessoaService {
     const url = `${this.urlBase}/tipo`;
 
     return this.http.get<TipoPessoa[]>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  getTipoPessoaById(id: number): Observable<TipoPessoa> {
+    const url = `${this.urlBase}/tipo/${id}`;
+
+    return this.http.get<TipoPessoa>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e))
     );

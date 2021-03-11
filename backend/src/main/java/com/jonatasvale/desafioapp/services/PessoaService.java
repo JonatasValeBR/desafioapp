@@ -11,10 +11,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jonatasvale.desafioapp.domain.Perfil;
 import com.jonatasvale.desafioapp.domain.Pessoa;
 import com.jonatasvale.desafioapp.domain.enums.TipoPessoa;
 import com.jonatasvale.desafioapp.dto.PessoaDTO;
 import com.jonatasvale.desafioapp.dto.PessoaNewDTO;
+import com.jonatasvale.desafioapp.repositories.PerfilRepository;
 import com.jonatasvale.desafioapp.repositories.PessoaRepository;
 import com.jonatasvale.desafioapp.services.exceptions.DataIntegrityException;
 import com.jonatasvale.desafioapp.services.exceptions.ObjectNotFoundException;
@@ -24,6 +26,9 @@ public class PessoaService {
 
 	@Autowired
 	private PessoaRepository repository;
+	
+	@Autowired
+	private PerfilRepository repositoryPerfil;
 	
 	public Pessoa buscar(Integer id) {
 		Optional<Pessoa> obj = repository.findById(id);
@@ -67,6 +72,10 @@ public class PessoaService {
 		return TipoPessoa.values();
 	}
 	
+	public TipoPessoa buscarENUMbyID(Integer cod){
+		return TipoPessoa.toEnum(cod);
+	}
+	
 	public List<Pessoa> buscarTudo(){
 		return repository.findAll();
 	}
@@ -91,6 +100,11 @@ public class PessoaService {
 		newObj.setCpf(obj.getCpf() == null ? newObj.getCpf() : obj.getCpf());
 		newObj.setTipo(obj.getTipo() == null ? newObj.getTipo() : obj.getTipo());
 		newObj.setPerfil(obj.getPerfil() == null ? newObj.getPerfil() : obj.getPerfil());
+	}
+
+	public List<Pessoa> buscarPerfis(String nome, List<Integer> ids) {
+		List<Perfil> perfis = repositoryPerfil.findAllById(ids);
+		return repository.findDistinctByNomeContainingAndPerfilIn(nome, perfis);
 	}
 
 	

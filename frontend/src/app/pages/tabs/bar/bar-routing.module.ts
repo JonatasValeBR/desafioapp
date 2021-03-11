@@ -22,6 +22,10 @@ const routes: Routes = [
           {
             path:'edit/:id',
             loadChildren: () => import('../pessoas-edit/pessoas-edit.module').then( m => m.PessoasEditPageModule)
+          },
+          {
+            path:'read/:id',
+            loadChildren: () => import('../pessoas-read/pessoas-read.module').then( m => m.PessoasReadPageModule)
           }
         ]
       },
@@ -31,6 +35,10 @@ const routes: Routes = [
           {
             path:'',
             loadChildren: () => import('../perfil/perfil.module').then( m => m.PerfilPageModule)
+          },
+          {
+            path:'read/:id',
+            loadChildren: () => import('../perfil-read/perfil-read.module').then( m => m.PerfilReadPageModule)
           }
         ]
       },

@@ -23,6 +23,15 @@ export class PerfilService {
     );
   }
 
+  getPerfilByID(id: number): Observable<Perfil> {
+    const url = `${this.urlBase}/${id}`;
+
+    return this.http.get<Perfil>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
   private errorHandler(e: any): Observable<any>{
     console.log("Error ao acessar o servidor");
     return EMPTY;

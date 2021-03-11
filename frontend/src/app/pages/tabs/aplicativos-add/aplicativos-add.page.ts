@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { AdicionarAplicativo } from 'src/app/api/aplicativo.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-aplicativos-add',
@@ -12,7 +13,7 @@ export class AplicativosAddPage implements OnInit {
 
   authForm: FormGroup;
   aplicativo: AdicionarAplicativo;
-  constructor(private formBuilder: FormBuilder, private servicePessoa: AplicativoService) {}
+  constructor(private formBuilder: FormBuilder, private servicePessoa: AplicativoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.criandoForm();
@@ -26,7 +27,7 @@ export class AplicativosAddPage implements OnInit {
       nome: this.authForm.value.nome,
     };
     this.servicePessoa.postAplicativo(this.aplicativo).subscribe(response => {
-      console.log(response);
+      this.router.navigateByUrl('/tabs/menu/aplicativo');
     })
   }
 

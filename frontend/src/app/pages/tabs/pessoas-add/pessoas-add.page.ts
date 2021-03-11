@@ -4,6 +4,7 @@ import { Perfil } from 'src/app/api/perfil.model';
 import { PerfilService } from 'src/app/api/perfil.service';
 import { AdicionarPessoa, TipoPessoa } from 'src/app/api/pessoa.model';
 import { PessoaService } from 'src/app/api/pessoa.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pessoas-add',
@@ -17,7 +18,7 @@ export class PessoasAddPage implements OnInit {
   tipos: TipoPessoa[];
   pessoa: AdicionarPessoa;
 
-  constructor(private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService) {}
+  constructor(private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
    this.criandoForm();
@@ -48,7 +49,7 @@ export class PessoasAddPage implements OnInit {
       }
     };
     this.servicePessoa.postPessoas(this.pessoa).subscribe(response => {
-      console.log(response);
+      this.router.navigateByUrl('/tabs/menu/pessoa');
     });
   }
 

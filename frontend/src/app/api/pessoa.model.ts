@@ -1,3 +1,5 @@
+import { PerfilWithApp } from './perfil.model';
+
 export interface FiltroPessoa {
   totalPages: number,
   totalElements: number,
@@ -12,23 +14,7 @@ export interface FiltroPessoa {
   last: true,
   size: number,
   content: [
-    {
-      id: number,
-      nome: string,
-      idade: number,
-      cpf: string,
-      tipo: string,
-      perfil: {
-        id: number,
-        nome: string,
-        aplicativos: [
-          {
-            id: number,
-            nome: string
-          }
-        ]
-      }
-    }
+    VisualizarPessoa
   ],
   number: number,
   sort: {
@@ -46,16 +32,7 @@ export interface VisualizarPessoa {
   idade: number,
   cpf: string,
   tipo: string,
-  perfil: {
-    id: number,
-    nome: string,
-    aplicativos: [
-      {
-        id: number,
-        nome: string
-      }
-    ]
-  }
+  perfil: PerfilWithApp
 }
 
 export interface AdicionarPessoa {

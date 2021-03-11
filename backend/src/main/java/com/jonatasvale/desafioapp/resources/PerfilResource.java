@@ -60,5 +60,6 @@ public class PerfilResource {
 		List<PerfilDTO> listDto = list.stream().map(obj -> new PerfilDTO(obj)).collect(Collectors.toList());	
 		return ResponseEntity.ok().body(listDto);
 	}
+	
 }
 

@@ -31,7 +31,7 @@ export class AplicativoPage implements OnInit {
     .then((res:any)=>{
       if(res.role  === 'okay'){
         this.service.deleteAplicativo(id).subscribe(response => {
-          console.log(response);
+          window.location.reload()
         })
       }
     });

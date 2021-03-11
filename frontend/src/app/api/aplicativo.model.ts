@@ -20,10 +20,7 @@ export interface FiltroAplicativo {
   last: true,
   size: number,
   content: [
-    {
-      id: number,
-      nome: string,
-    }
+    Aplicativo
   ],
   number: number,
   sort: {

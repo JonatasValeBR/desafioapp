@@ -87,7 +87,7 @@ export class PessoaPage implements OnInit {
     .then((res:any)=>{
       if(res.role  === 'okay'){
         this.service.deletePessoas(id).subscribe(response => {
-          console.log(response);
+          window.location.reload()
         })
       }
     });

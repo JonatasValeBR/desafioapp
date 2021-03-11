@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large">Visualizar pessoa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Nome</ion-label>
+          <ion-input [readonly]="true" type="text">{{pessoa.nome}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Idade</ion-label>
+          <ion-input type="number" [readonly]="true"  inputmode="numeric">{{pessoa.idade}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">CPF</ion-label>
+          <ion-input type="text" [readonly]="true" inputmode="numeric">{{pessoa.cpf}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Tipo</ion-label>
+          <ion-input [readonly]="true" type="text">{{pessoa.tipo}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Perfil</ion-label>
+          <ion-input [readonly]="true" type="text">{{pessoa.perfil.nome}}</ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0"></ion-col>
+    </ion-row>
+
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col size="11">
+        <ion-item>
+          <ion-label position="stacked">Aplicativos</ion-label>
+          <ion-slides pager="true" [options]="slideOpts" >
+            <ion-slide *ngFor="let aplicativo of pessoa.perfil.aplicativos">
+              <ion-card >
+                <ion-card-header>
+                  <ion-card-title>{{aplicativo.nome}}</ion-card-title>
+                </ion-card-header>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0.5"></ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

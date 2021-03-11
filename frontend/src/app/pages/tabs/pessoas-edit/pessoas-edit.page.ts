@@ -61,9 +61,8 @@ export class PessoasEditPage implements OnInit {
         id: Number(this.authForm.value.perfil)
       }
     };
-    console.log(this.pessoa);
     this.servicePessoa.putPessoas(this.pessoa).subscribe(response => {
-      console.log(response);
+      this.router.navigateByUrl('/tabs/menu/pessoa');
     });
   }
 
