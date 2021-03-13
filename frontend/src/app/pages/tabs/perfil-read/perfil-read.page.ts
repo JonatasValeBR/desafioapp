@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PerfilService } from 'src/app/api/perfil.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Perfil } from 'src/app/api/perfil.model';
+import { Perfil, PerfilWithApp } from 'src/app/api/perfil.model';
 import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { Aplicativo } from 'src/app/api/aplicativo.model';
 
@@ -12,22 +12,19 @@ import { Aplicativo } from 'src/app/api/aplicativo.model';
 })
 export class PerfilReadPage implements OnInit {
 
-  perfil: Perfil;
-  aplicativos: Aplicativo[];
+  perfil: PerfilWithApp;
   slideOpts = {
     initialSlide: 0,
     speed: 400
   };
-  constructor(private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private serviceAplicativo: AplicativoService) { }
+  constructor(private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.instancePerfil();
-    this.instanceAplicativos();
   }
 
   ionViewWillEnter(): void{
     this.route.params.subscribe( parametros => {
-      console.log("paramid: " + parametros['id']);
 
        if (parametros['id'] != undefined) {
         this.servicePerfil.getPerfilByID(parametros['id'])
@@ -35,17 +32,16 @@ export class PerfilReadPage implements OnInit {
           this.instancePerfil(response);
         });
        }else{
-         this.router.navigateByUrl('/tabs/menu/pessoa');
+         this.router.navigateByUrl('/tabs/menu/perfil');
        }
      });
   }
-  private instancePerfil(data?: Perfil): void {
+
+  private instancePerfil(data?: PerfilWithApp): void {
     this.perfil = {
       id: data == undefined ? null : data.id,
       nome: data == undefined ? null : data.nome,
-    }
-  }
-  private instanceAplicativos(data?: Aplicativo[]): void {
-    this.aplicativos = data == undefined ? null : data;
+      aplicativos: data == undefined ? null : data.aplicativos
+    };
   }
 }

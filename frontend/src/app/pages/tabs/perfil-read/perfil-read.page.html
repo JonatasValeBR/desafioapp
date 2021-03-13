@@ -21,17 +21,24 @@
       <ion-col size="0.5"></ion-col>
       <ion-col size="11">
         <ion-item>
+        <ion-list>
           <ion-label position="stacked">Aplicativos</ion-label>
-          <ion-slides pager="true" [options]="slideOpts" >
-            <ion-slide *ngFor="let aplicativo of aplicativos">
-              <ion-card >
-                <ion-card-header>
-                  <ion-card-title>{{aplicativo.nome}}</ion-card-title>
-                </ion-card-header>
-              </ion-card>
-            </ion-slide>
-          </ion-slides>
-        </ion-item>
+          <ion-item >
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            <ion-label>Pokémon Yellow</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-button>
+          <ion-icon name="arrow-down-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-searchbar></ion-searchbar>
+        <ion-list>
+          <ion-item >
+            <ion-icon name="add-circle-outline"></ion-icon>
+            <ion-label>Pokémon Yellow</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-item>
       </ion-col>
       <ion-col size="0.5"></ion-col>
     </ion-row>
@@ -42,10 +49,10 @@
         <ion-item>
           <ion-label position="stacked">Pessoas</ion-label>
           <ion-slides pager="true" [options]="slideOpts" >
-            <ion-slide *ngFor="let aplicativo of aplicativos">
+            <ion-slide>
               <ion-card >
                 <ion-card-header>
-                  <ion-card-title>{{aplicativo.nome}}</ion-card-title>
+                  <ion-card-title>aplicativo.nome</ion-card-title>
                 </ion-card-header>
               </ion-card>
             </ion-slide>

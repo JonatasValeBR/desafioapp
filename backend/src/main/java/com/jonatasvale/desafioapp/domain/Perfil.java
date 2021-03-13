@@ -61,6 +61,10 @@ public class Perfil implements Serializable {
 		return aplicativos;
 	}
 
+	public void setAplicativos(List<Aplicativo> aplicativos) {
+		this.aplicativos = aplicativos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

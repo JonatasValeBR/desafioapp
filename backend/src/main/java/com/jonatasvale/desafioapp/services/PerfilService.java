@@ -20,6 +20,7 @@ public class PerfilService {
 	@Autowired
 	private PerfilRepository repository;
 	
+	
 	public Perfil buscar(Integer id) {
 		Optional<Perfil> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Perfil.class.getName()));
@@ -64,5 +65,6 @@ public class PerfilService {
 	public Perfil fromDTO(PerfilDTO objDto) {
 		return new Perfil(objDto.getId(),objDto.getNome());
 	}
+	
 }
 

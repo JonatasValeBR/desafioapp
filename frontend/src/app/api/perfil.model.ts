@@ -8,5 +8,5 @@ export interface Perfil {
 export interface PerfilWithApp {
   id: number,
   nome: string,
-  aplicativos: Aplicativo
+  aplicativos: Aplicativo[]
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VisualizarPessoa } from 'src/app/api/pessoa.model';
 import { PessoaService } from 'src/app/api/pessoa.service';
-import { cpuUsage } from 'process';
 
 @Component({
   selector: 'app-pessoas-read',

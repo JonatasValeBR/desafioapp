@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large">Atribuir aplicativos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="linha-input">
+      <ion-col size="0.5"></ion-col>
+      <ion-col size="11">
+        <ion-button (click)="adicionar = !adicionar"> Adicionar
+          <ion-icon *ngIf="adicionar" name="arrow-up-circle-outline"></ion-icon>
+          <ion-icon *ngIf="!adicionar" name="arrow-down-circle-outline"></ion-icon>
+        </ion-button>
+        <div *ngIf="adicionar">
+          <ion-item *ngIf="adicionar">
+              <ion-list >
+                <ion-item *ngFor="let aplicativo of aplicativosAdicionar">
+                  <ion-icon name="add-circle-outline" (click)="adicionarAplicativo(aplicativo.id)"></ion-icon>
+                  <ion-label>{{aplicativo.nome}}</ion-label>
+                </ion-item>
+              </ion-list>
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-list>
+            <ion-label position="stacked">Aplicativos</ion-label>
+            <ion-item *ngFor="let aplicativo of aplicativos">
+              <ion-icon slot="start" name="trash-outline" (click)="retirarAplicativo(aplicativo.id)"></ion-icon>
+              <ion-label>{{aplicativo.nome}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-item>
+        <ion-item lines="none" *ngIf="error">
+          <ion-note color="danger">Campo obrigatório e necessario ter pelo menos um aplicativo.</ion-note>
+        </ion-item>
+      </ion-col>
+      <ion-col size="0.5"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3"></ion-col>
+      <ion-col>
+        <ion-button type="submit" expand="block" (click)="onSave()">Salvar</ion-button>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

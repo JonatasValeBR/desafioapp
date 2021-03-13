@@ -39,6 +39,10 @@ const routes: Routes = [
           {
             path:'read/:id',
             loadChildren: () => import('../perfil-read/perfil-read.module').then( m => m.PerfilReadPageModule)
+          },
+          {
+            path:'attrb/:id',
+            loadChildren: () => import('../perfil-attrb/perfil-attrb.module').then( m => m.PerfilAttrbPageModule)
           }
         ]
       },
