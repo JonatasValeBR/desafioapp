@@ -71,17 +71,17 @@
           </ion-item>
           <ion-item-options side="end">
             <!--(click)="unread(item)"-->
-            <ion-item-option color="warning">
-              <ion-icon name="create-outline" routerLink="/tabs/menu/pessoa/edit/{{pessoa.id}}"></ion-icon>
+            <ion-item-option color="warning" routerLink="/tabs/menu/pessoa/edit/{{pessoa.id}}">
+              <ion-icon name="create-outline" ></ion-icon>
             </ion-item-option>
             <!--(click)="unread(item)"-->
-            <ion-item-option color="danger" >
-              <ion-icon name="trash-outline" (click)="deletarPessoa(pessoa.id)"></ion-icon>
+            <ion-item-option color="danger" (click)="deletarPessoa(pessoa.id)" >
+              <ion-icon name="trash-outline" ></ion-icon>
             </ion-item-option>
           </ion-item-options>
           <ion-item-options side="start">
-            <ion-item-option color="tertiary">
-              <ion-icon name="eye-outline" routerLink="/tabs/menu/pessoa/read/{{pessoa.id}}"></ion-icon>
+            <ion-item-option color="tertiary" routerLink="/tabs/menu/pessoa/read/{{pessoa.id}}">
+              <ion-icon name="eye-outline" ></ion-icon>
             </ion-item-option>
           </ion-item-options>
         </ion-item-sliding>

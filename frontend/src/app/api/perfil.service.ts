@@ -32,6 +32,24 @@ export class PerfilService {
     );
   }
 
+  putPerfil(perfil: PerfilWithApp): Observable<PerfilWithApp> {
+    const url = `${this.urlBase}/${perfil.id}`;
+
+    return this.http.put<PerfilWithApp>(url,perfil).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  getPerfisByAplicativo(id: number): Observable<Perfil[]> {
+    const url = `${this.urlBase}/aplicativos?aplicativos=${id}`;
+
+    return this.http.get<Perfil[]>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
   private errorHandler(e: any): Observable<any>{
     console.log("Error ao acessar o servidor");
     return EMPTY;

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -25,7 +27,16 @@ public class Perfil implements Serializable {
 	@Column(unique=true)
 	private String nome;
 	
+	/*
 	@ManyToMany(mappedBy="perfis")
+	private List<Aplicativo> aplicativos = new ArrayList<>();
+	*/
+	
+	@ManyToMany
+	@JoinTable(name="PERFIL_APLICATIVO",
+		joinColumns = @JoinColumn(name = "perfil_id"),
+		inverseJoinColumns = @JoinColumn(name="aplicativo_id")
+	)
 	private List<Aplicativo> aplicativos = new ArrayList<>();
 	
 	@JsonIgnore
@@ -39,6 +50,13 @@ public class Perfil implements Serializable {
 		super();
 		this.id = id;
 		this.nome = nome;
+	}
+	
+	public Perfil(Integer id, String nome, List<Aplicativo> aplicativos) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.aplicativos = aplicativos;
 	}
 	
 	public Integer getId() {

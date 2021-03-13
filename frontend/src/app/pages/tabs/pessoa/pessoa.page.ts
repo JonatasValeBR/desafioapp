@@ -17,6 +17,7 @@ export class PessoaPage implements OnInit {
   filtroPessoa: FiltroPessoa;
   pessoas: VisualizarPessoa[];
   pessoasBackup: VisualizarPessoa[];
+  pessoasAll:  VisualizarPessoa[];
   scroll: boolean = false;
   orderBy: string = "ASC";
   sortBy: string = "nome";
@@ -30,7 +31,7 @@ export class PessoaPage implements OnInit {
   }
 
   async filterList(evt) {
-    this.pessoas = this.pessoasBackup;
+    this.pessoas = this.pessoasAll;
     const searchTerm = evt.srcElement.value;
 
     if (!searchTerm) {
@@ -92,12 +93,14 @@ export class PessoaPage implements OnInit {
       }
     });
   }
+
   iniciar(): void {
     this.pessoas = [];
     this.pessoasBackup = [];
     this.filtroPessoa = null;
-    this.addMoreItems(0,6,this.sortBy,this.orderBy);
+    this.addMoreItems(0,6,this.sortBy,this.orderBy, undefined, true);
   }
+
   toggleInfiniteScroll(): void {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
     this.scroll = this.infiniteScroll.disabled;
@@ -107,7 +110,7 @@ export class PessoaPage implements OnInit {
     setTimeout(() => {
       event.target.complete();
       if (this.filtroPessoa.last != true){
-        this.addMoreItems(this.filtroPessoa.number+1,6,this.sortBy,this.orderBy);
+        this.addMoreItems(this.filtroPessoa.number+1,3,this.sortBy,this.orderBy);
       }
     }, 500);
   }
@@ -127,17 +130,27 @@ export class PessoaPage implements OnInit {
     this.filtroPessoa = filtro;
   }
 
-  setPessoas(pessoas: VisualizarPessoa[]): void{
-    pessoas.forEach(element => {
-      this.pessoas.push(element);
-    });
-    this.pessoasBackup = pessoas;
+  setPessoas(pessoas: VisualizarPessoa[], all?:boolean): void{
+    if (all == undefined){
+      pessoas.forEach(element => {
+        this.pessoas.push(element);
+      });
+      this.pessoasBackup = pessoas;
+    } else {
+      this.pessoasAll = pessoas;
+    }
   }
 
-  addMoreItems(page?: number, linesPerPage?: number, orderBy?:string, direction?:string): void{
+  addMoreItems(page?: number, linesPerPage?: number, orderBy?:string, direction?:string, all?:boolean, iniciar?: boolean): void{
     this.service.getPessoas(page, linesPerPage, orderBy, direction).subscribe(response => {
-      this.setFiltroPessoa(response);
-      this.setPessoas(response['content']);
+      if (all == undefined){
+        this.setFiltroPessoa(response);
+      }
+
+      if (iniciar != undefined){
+        this.addMoreItems(0,this.filtroPessoa.totalElements,this.sortBy,this.orderBy, true);
+      }
+      this.setPessoas(response['content'], all);
     });
   }
 

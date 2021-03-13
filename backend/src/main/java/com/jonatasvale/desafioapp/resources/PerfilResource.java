@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jonatasvale.desafioapp.domain.Perfil;
+import com.jonatasvale.desafioapp.dto.PerfilAlterDTO;
 import com.jonatasvale.desafioapp.dto.PerfilDTO;
+import com.jonatasvale.desafioapp.resources.utils.URL;
 import com.jonatasvale.desafioapp.services.PerfilService;
 
 @RestController
@@ -41,7 +44,7 @@ public class PerfilResource {
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody PerfilDTO objDTO, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@RequestBody PerfilAlterDTO objDTO, @PathVariable Integer id) {
 		Perfil obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.atualizar(obj);
@@ -59,6 +62,17 @@ public class PerfilResource {
 		List<Perfil> list = service.buscarTudo();
 		List<PerfilDTO> listDto = list.stream().map(obj -> new PerfilDTO(obj)).collect(Collectors.toList());	
 		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@RequestMapping(value="aplicativos",method=RequestMethod.GET)
+	public ResponseEntity<List<PerfilDTO>> findAplicativos(
+			@RequestParam(value="nome", defaultValue="") String nome, 
+			@RequestParam(value="aplicativos", defaultValue="")String aplicativos) 
+	{
+		List<Integer> ids = URL.decodeIntList(aplicativos);
+		List<Perfil> list = service.buscarAplicativos(nome, ids);
+		List<PerfilDTO> listDto = list.stream().map(obj -> new PerfilDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto); 
 	}
 	
 }

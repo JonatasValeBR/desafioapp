@@ -115,6 +115,9 @@ export class PerfilAttrbPage implements OnInit {
       this.error = true;
     } else {
       this.perfil.aplicativos = this.aplicativos;
+      this.servicePerfil.putPerfil(this.perfil).subscribe(response => {
+        this.router.navigateByUrl('/tabs/menu/perfil');
+      });
     }
   }
 }

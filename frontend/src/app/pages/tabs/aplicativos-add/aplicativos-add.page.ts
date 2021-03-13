@@ -13,7 +13,7 @@ export class AplicativosAddPage implements OnInit {
 
   authForm: FormGroup;
   aplicativo: AdicionarAplicativo;
-  constructor(private formBuilder: FormBuilder, private servicePessoa: AplicativoService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private serviceAplicativo: AplicativoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.criandoForm();
@@ -26,7 +26,7 @@ export class AplicativosAddPage implements OnInit {
     this.aplicativo ={
       nome: this.authForm.value.nome,
     };
-    this.servicePessoa.postAplicativo(this.aplicativo).subscribe(response => {
+    this.serviceAplicativo.postAplicativo(this.aplicativo).subscribe(response => {
       this.router.navigateByUrl('/tabs/menu/aplicativo');
     })
   }
@@ -37,7 +37,7 @@ export class AplicativosAddPage implements OnInit {
 
   private criandoForm(): void {
     this.authForm = this.formBuilder.group({
-      nome: ['Teste', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]]
+      nome: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]]
     })
   }
 

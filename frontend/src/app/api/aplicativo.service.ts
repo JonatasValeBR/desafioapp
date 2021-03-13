@@ -28,7 +28,6 @@ export class AplicativoService {
     if (direction!=null){
       url = url.concat(`&direction=${direction}`);
     }
-
     return this.http.get<FiltroAplicativo>(url).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e))
@@ -48,6 +47,24 @@ export class AplicativoService {
     const url = `${this.urlBase}/${id}`;
 
     return this.http.delete<any>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  getAplicativoByID(id: number): Observable<Aplicativo> {
+    const url = `${this.urlBase}/${id}`;
+
+    return this.http.get<Aplicativo>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  putAplicativo(aplicativo: Aplicativo): Observable<Aplicativo> {
+    const url = `${this.urlBase}/${aplicativo.id}`;
+
+    return this.http.put<Aplicativo>(url,aplicativo).pipe(
       map(obj => obj),
       catchError(e => this.errorHandler(e))
     );

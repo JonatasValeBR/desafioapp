@@ -9,11 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Aplicativo implements Serializable {
@@ -26,13 +22,18 @@ public class Aplicativo implements Serializable {
 	@Column(unique=true)
 	private String nome;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="PERFIL_APLICATIVO",
 		joinColumns = @JoinColumn(name = "aplicativo_id"),
 		inverseJoinColumns = @JoinColumn(name="perfil_id")
 	)
 	private List<Perfil> perfis = new ArrayList<>();
+	*/
+	
+	@ManyToMany(mappedBy="aplicativos")
+	private List<Perfil> perfis = new ArrayList<>();
+	
 	
 
 	public Aplicativo() {

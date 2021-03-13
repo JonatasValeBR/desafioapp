@@ -29,11 +29,13 @@ export interface FiltroPessoa {
 export interface VisualizarPessoa {
   id: number,
   nome: string,
-  idade: number,
-  cpf: string,
-  tipo: string,
-  perfil: PerfilWithApp
+  idade?: number,
+  cpf?: string,
+  tipo?: string,
+  perfil?: PerfilWithApp
 }
+
+
 
 export interface AdicionarPessoa {
   nome: string,

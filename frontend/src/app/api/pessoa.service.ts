@@ -88,6 +88,15 @@ export class PessoaService {
     );
   }
 
+  getPessoaByPerfil(id: number): Observable<VisualizarPessoa[]> {
+    const url = `${this.urlBase}/perfis?perfis=${id}`;
+
+    return this.http.get<VisualizarPessoa[]>(url).pipe(
+      map(obj => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
   deletePessoas(id: number): Observable<any> {
     const url = `${this.urlBase}/${id}`;
 

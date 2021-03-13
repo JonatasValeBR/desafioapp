@@ -54,8 +54,16 @@ const routes: Routes = [
             loadChildren: () => import('../aplicativo/aplicativo.module').then( m => m.AplicativoPageModule)
           },
           {
-            path: 'add',
+            path: 'add/',
             loadChildren: () => import('../aplicativos-add/aplicativos-add.module').then( m => m.AplicativosAddPageModule)
+          },
+          {
+            path: 'edit/:id',
+            loadChildren: () => import('../aplicativo-edit/aplicativo-edit.module').then( m => m.AplicativoEditPageModule)
+          },
+          {
+            path: 'read/:id',
+            loadChildren: () => import('../aplicativo-read/aplicativo-read.module').then( m => m.AplicativoReadPageModule)
           }
         ]
       },
