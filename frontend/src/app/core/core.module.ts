@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ErrorInterceptorProvider } from 'src/interceptors/error-interceptor';
 
 
 

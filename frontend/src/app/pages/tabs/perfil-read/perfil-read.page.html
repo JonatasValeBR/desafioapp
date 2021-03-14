@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title size="large">Visualizar perfil</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/menu/pessoa"
+          [text]="buttonText"
+          [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">Visualizar</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +16,7 @@
       <ion-col size="0.5"></ion-col>
       <ion-col>
         <ion-item>
-          <ion-label position="stacked">Nome</ion-label>
+          <ion-label class="color" position="stacked">Nome</ion-label>
           <ion-input [readonly]="true" type="text">{{perfil.nome}}</ion-input>
         </ion-item>
       </ion-col>
@@ -20,13 +26,12 @@
     <ion-row class="linha-input">
       <ion-col size="0.5"></ion-col>
       <ion-col size="11">
-        <ion-item>
-          <ion-list>
-            <ion-label position="stacked">Aplicativos</ion-label>
+        <ion-item >
+          <ion-list >
+            <ion-label class="color" position="stacked">Aplicativos</ion-label>
             <ion-item lines="none" *ngFor="let aplicativo of perfil.aplicativos">
-              <ion-icon slot="start" name="eye-outline" routerLink="/tabs/menu/aplicativo/read/{{aplicativo.id}}"></ion-icon>
+              <ion-icon slot="start" name="eye-outline" routerLink="/tabs/menu/aplicativo/read/{{aplicativo.id}}" color="secondary"></ion-icon>
               <ion-label>{{aplicativo.nome}}</ion-label>
-
             </ion-item>
           </ion-list>
         </ion-item>
@@ -39,9 +44,9 @@
       <ion-col size="11">
         <ion-item>
           <ion-list>
-            <ion-label position="stacked">Pessoas</ion-label>
+            <ion-label class="color" position="stacked">Pessoas</ion-label>
             <ion-item lines="none" *ngFor="let pessoa of pessoas">
-              <ion-icon slot="start" name="eye-outline" routerLink="/tabs/menu/pessoa/read/{{pessoa.id}}"></ion-icon>
+              <ion-icon slot="start" name="eye-outline" routerLink="/tabs/menu/pessoa/read/{{pessoa.id}}" color="secondary"></ion-icon>
               <ion-label>{{pessoa.nome}}</ion-label>
             </ion-item>
           </ion-list>

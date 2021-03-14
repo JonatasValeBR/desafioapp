@@ -29,8 +29,7 @@ export class PessoaService {
     }
 
     return this.http.get<FiltroPessoa>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -38,8 +37,7 @@ export class PessoaService {
     const url = `${this.urlBase}`;
 
     return this.http.post<AdicionarPessoa>(url,pessoa).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -47,8 +45,7 @@ export class PessoaService {
     const url = `${this.urlBase}/${id}`;
 
     return this.http.get<EditarPessoa>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -56,8 +53,7 @@ export class PessoaService {
     const url = `${this.urlBase}/${id}`;
 
     return this.http.get<VisualizarPessoa>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -65,8 +61,7 @@ export class PessoaService {
     const url = `${this.urlBase}/${pessoa.id}`;
 
     return this.http.put<EditarPessoa>(url,pessoa).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -74,8 +69,7 @@ export class PessoaService {
     const url = `${this.urlBase}/tipo`;
 
     return this.http.get<TipoPessoa[]>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -83,8 +77,7 @@ export class PessoaService {
     const url = `${this.urlBase}/tipo/${id}`;
 
     return this.http.get<TipoPessoa>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -92,8 +85,7 @@ export class PessoaService {
     const url = `${this.urlBase}/perfis?perfis=${id}`;
 
     return this.http.get<VisualizarPessoa[]>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -101,15 +93,9 @@ export class PessoaService {
     const url = `${this.urlBase}/${id}`;
 
     return this.http.delete<any>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
-  private errorHandler(e: any): Observable<any>{
-
-    console.log("Error ao acessar o servidor");
-    return EMPTY;
-  }
 
 }

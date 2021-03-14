@@ -6,6 +6,8 @@ import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { Aplicativo } from 'src/app/api/aplicativo.model';
 import { VisualizarPessoa } from 'src/app/api/pessoa.model';
 import { PessoaService } from 'src/app/api/pessoa.service';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
+import { ToastService } from 'src/app/core/toast.service';
 
 @Component({
   selector: 'app-perfil-read',
@@ -16,11 +18,13 @@ export class PerfilReadPage implements OnInit {
 
   pessoas: VisualizarPessoa[];
   perfil: PerfilWithApp;
+  buttonText: string = "Voltar";
+  buttonIcon: string ="chevron-back-outline";
   slideOpts = {
     initialSlide: 0,
     speed: 400
   };
-  constructor(private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private servicePessoa: PessoaService) { }
+  constructor(private convert: ErrorHttpService, private toast: ToastService, private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private servicePessoa: PessoaService) { }
 
   ngOnInit() {
     this.instancePerfil();
@@ -34,10 +38,24 @@ export class PerfilReadPage implements OnInit {
         this.servicePerfil.getPerfilByID(parametros['id'])
         .subscribe(response => {
           this.instancePerfil(response);
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
         });
         this.servicePessoa.getPessoaByPerfil(parametros['id'])
         .subscribe(response => {
           this.instancePessoas(response);
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
         });
        }else{
          this.router.navigateByUrl('/tabs/menu/perfil');

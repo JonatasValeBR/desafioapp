@@ -3,6 +3,8 @@ import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms'
 import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdicionarAplicativo, Aplicativo } from 'src/app/api/aplicativo.model';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
+import { ToastService } from 'src/app/core/toast.service';
 
 @Component({
   selector: 'app-aplicativo-edit',
@@ -12,7 +14,9 @@ import { AdicionarAplicativo, Aplicativo } from 'src/app/api/aplicativo.model';
 export class AplicativoEditPage implements OnInit {
   authForm: FormGroup;
   aplicativo: Aplicativo;
-  constructor(private formBuilder: FormBuilder, private serviceAplicativo: AplicativoService, private route: ActivatedRoute, private router: Router) {}
+  buttonText: string = "Voltar";
+  buttonIcon: string ="chevron-back-outline";
+  constructor(private convert: ErrorHttpService, private toast: ToastService,private formBuilder: FormBuilder, private serviceAplicativo: AplicativoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.criandoForm();
@@ -31,7 +35,14 @@ export class AplicativoEditPage implements OnInit {
        }else{
          this.router.navigateByUrl('/tabs/menu/pessoa');
        }
-     });
+     }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
+    });
   }
 
   submitForm(){
@@ -41,7 +52,15 @@ export class AplicativoEditPage implements OnInit {
     };
 
     this.serviceAplicativo.putAplicativo(this.aplicativo).subscribe(response => {
+      this.toast.show("Aplicativo editado com Sucesso", "toast-success");
       this.router.navigateByUrl('/tabs/menu/aplicativo');
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     })
   }
 

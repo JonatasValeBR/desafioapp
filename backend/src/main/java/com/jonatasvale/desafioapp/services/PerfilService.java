@@ -34,7 +34,7 @@ public class PerfilService {
 	
 	public Perfil buscar(Integer id) {
 		Optional<Perfil> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Perfil.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Perfil nao encontrado!"));
 	}
 	
 	@Transactional
@@ -70,7 +70,7 @@ public class PerfilService {
 		try {
 			repository.deleteById(id);
 		} catch(DataIntegrityViolationException err) {
-			throw new DataIntegrityException("Nao eh possivel excluir um perfil vinculado a uma pessoa");
+			throw new DataIntegrityException("Nao eh possivel excluir um perfil vinculado a um aplicativo");
 		}
 		
 	}

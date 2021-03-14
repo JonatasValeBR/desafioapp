@@ -5,6 +5,8 @@ import { PessoaService } from 'src/app/api/pessoa.service';
 import { Perfil } from 'src/app/api/perfil.model';
 import { EditarPessoa, VisualizarPessoa, TipoPessoa } from 'src/app/api/pessoa.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
+import { ToastService } from 'src/app/core/toast.service';
 
 @Component({
   selector: 'app-pessoas-edit',
@@ -13,11 +15,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PessoasEditPage implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private convert: ErrorHttpService, private toast: ToastService, private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService, private route: ActivatedRoute, private router: Router) {}
   authForm: FormGroup;
   perfis: Perfil[];
   tipos: TipoPessoa[];
   pessoa: EditarPessoa;
+  buttonText: string = "Voltar";
+  buttonIcon: string ="chevron-back-outline";
 
   ngOnInit() {
     this.criandoForm();
@@ -26,13 +30,21 @@ export class PessoasEditPage implements OnInit {
 
   ionViewWillEnter(): void{
     this.route.params.subscribe( parametros => {
-      console.log("paramid: " + parametros['id']);
+
 
        if (parametros['id'] != undefined) {
         this.servicePessoa.getPessoasByID(parametros['id'])
         .subscribe(response => {
           this.atualizarForm(response);
           this.instancePessoa(response)
+        }, error => {
+
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
         });
        }else{
          this.router.navigateByUrl('/tabs/menu/pessoa');
@@ -44,9 +56,23 @@ export class PessoasEditPage implements OnInit {
   carregarCampos() {
     this.servicePerfil.getPerfis().subscribe(response => {
       this.perfis = response;
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
     this.servicePessoa.getTipoPessoa().subscribe(response => {
       this.tipos = response;
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
   }
 
@@ -62,7 +88,15 @@ export class PessoasEditPage implements OnInit {
       }
     };
     this.servicePessoa.putPessoas(this.pessoa).subscribe(response => {
+      this.toast.show("Pessoa Editada com Sucesso", "toast-success");
       this.router.navigateByUrl('/tabs/menu/pessoa');
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
   }
 

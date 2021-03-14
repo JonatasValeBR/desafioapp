@@ -3,6 +3,8 @@ import { Aplicativo, FiltroAplicativo } from 'src/app/api/aplicativo.model';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { ToastService } from 'src/app/core/toast.service';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
 
 @Component({
   selector: 'app-aplicativo',
@@ -11,7 +13,7 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class AplicativoPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  constructor(private service: AplicativoService, private alert: AlertService) { }
+  constructor(private convert: ErrorHttpService, private toast: ToastService, private service: AplicativoService, private alert: AlertService) { }
 
   filtroAplicativo: FiltroAplicativo;
   aplicativosBackup: Aplicativo[];
@@ -20,6 +22,7 @@ export class AplicativoPage implements OnInit {
   scroll = false;
   orderBy: string = "ASC";
   sortBy: string = "nome";
+  numberPage: number = 6;
 
   ngOnInit(): void {
 
@@ -34,8 +37,16 @@ export class AplicativoPage implements OnInit {
     .then((res:any)=>{
       if(res.role  === 'okay'){
         this.service.deleteAplicativo(id).subscribe(response => {
-          window.location.reload()
-        })
+          this.toast.show("Aplicativo excluido com sucesso", "toast-success");
+          this.iniciar();
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
+    })
       }
     });
   }
@@ -49,7 +60,7 @@ export class AplicativoPage implements OnInit {
     setTimeout(() => {
       event.target.complete();
       if (this.filtroAplicativo.last != true){
-        this.addMoreItems(this.filtroAplicativo.number+1,6,this.sortBy,this.orderBy);
+        this.addMoreItems(this.filtroAplicativo.number+1,this.numberPage,this.sortBy,this.orderBy);
       }
     }, 500);
   }
@@ -95,6 +106,13 @@ export class AplicativoPage implements OnInit {
       }
 
       this.setAplicativos(response['content'], all);
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
   }
 
@@ -119,10 +137,10 @@ export class AplicativoPage implements OnInit {
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
+
 
     setTimeout(() => {
-      console.log('Async operation has ended');
+
       event.target.complete();
       this.iniciar();
       event.target.disabled = false;
@@ -133,7 +151,7 @@ export class AplicativoPage implements OnInit {
     this.aplicativos = [];
     this.aplicativosBackup = [];
     this.filtroAplicativo = null;
-    this.addMoreItems(0,6,this.sortBy,this.orderBy, undefined, true);
+    this.addMoreItems(0,this.numberPage,this.sortBy,this.orderBy, undefined, true);
   }
 
   getContent(): HTMLIonContentElement {

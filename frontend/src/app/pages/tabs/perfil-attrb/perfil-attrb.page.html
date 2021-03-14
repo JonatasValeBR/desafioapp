@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title size="large">Atribuir aplicativos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/menu/pessoa"
+          [text]="buttonText"
+          [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">Atribuir</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +23,7 @@
           <ion-item *ngIf="adicionar" style="margin-top: 5%;">
               <ion-list >
                 <ion-item *ngFor="let aplicativo of aplicativosAdicionar" lines="none">
-                  <ion-icon name="add-circle-outline" (click)="adicionarAplicativo(aplicativo.id)"></ion-icon>
+                  <ion-icon name="add-circle-outline" (click)="adicionarAplicativo(aplicativo.id)" color="success"></ion-icon>
                   <ion-label>{{aplicativo.nome}}</ion-label>
                 </ion-item>
               </ion-list>
@@ -25,9 +31,9 @@
         </div>
         <ion-item style="margin-top: 10%;" >
           <ion-list>
-            <ion-label position="stacked">Aplicativos</ion-label>
+            <ion-label position="stacked" class="color">Aplicativos</ion-label>
             <ion-item *ngFor="let aplicativo of aplicativos" lines="none">
-              <ion-icon slot="start" name="trash-outline" (click)="retirarAplicativo(aplicativo.id)"></ion-icon>
+              <ion-icon slot="start" name="trash-outline" (click)="retirarAplicativo(aplicativo.id)" color="danger"></ion-icon>
               <ion-label>{{aplicativo.nome}}</ion-label>
             </ion-item>
           </ion-list>

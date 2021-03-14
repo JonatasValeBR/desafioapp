@@ -44,3 +44,19 @@ ion-item-option ion-icon {
   height: 2em;
 }
 
+.first {
+  background: var(--ion-color-secondary);
+}
+
+.second {
+  background: var(--ion-color-tertiary);
+}
+
+ion-header {
+  background: var(--ion-color-primary);
+}
+
+ion-title {
+  background: var(--ion-color-primary);
+  color: white;
+}

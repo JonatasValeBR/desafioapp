@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title size="large">Editar pessoa</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="tabs/menu/pessoa"
+          [text]="buttonText"
+          [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">Editar</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +18,7 @@
       <ion-col size="0.5"></ion-col>
       <ion-col>
         <ion-item>
-          <ion-label position="floating">Nome</ion-label>
+          <ion-label class="color" position="floating">Nome</ion-label>
           <ion-input clearInput formControlName="nome" type="text"></ion-input>
         </ion-item>
         <ion-item lines="none" *ngIf="nome.dirty && ( nome.hasError('required') || nome.hasError('minlength') || nome.hasError('maxlength') )">
@@ -28,7 +34,7 @@
       <ion-col size="0.5"></ion-col>
       <ion-col>
         <ion-item>
-          <ion-label position="floating">Idade</ion-label>
+          <ion-label class="color" position="floating">Idade</ion-label>
           <ion-input type="number" clearInput formControlName="idade" inputmode="numeric"></ion-input>
         </ion-item>
         <ion-item lines="none" *ngIf="idade.dirty && ( idade.hasError('required') || idade.hasError('max'))">
@@ -43,7 +49,7 @@
       <ion-col size="0.5"></ion-col>
       <ion-col>
         <ion-item>
-          <ion-label position="floating">CPF</ion-label>
+          <ion-label class="color" position="floating">CPF</ion-label>
           <ion-input clearInput type="text" formControlName="cpf" inputmode="numeric"></ion-input>
         </ion-item>
         <ion-item lines="none" *ngIf="cpf.dirty && cpf.hasError('required')">
@@ -59,7 +65,7 @@
           <ion-list>
             <ion-radio-group formControlName="perfil" value="{{this.pessoa.perfil.id}}">
               <ion-list-header>
-                <ion-title>Perfil</ion-title>
+                <ion-title style="font-weight: 600;">Perfil</ion-title>
               </ion-list-header>
               <ion-item *ngFor="let perfil of perfis">
                 <ion-label>{{perfil.nome}}</ion-label>
@@ -76,7 +82,7 @@
           <ion-list>
             <ion-radio-group formControlName="tipo" value="{{this.pessoa.tipo}}">
               <ion-list-header>
-                <ion-title>Tipo</ion-title>
+                <ion-title style="font-weight: 600;">Tipo</ion-title>
               </ion-list-header>
               <ion-item *ngFor="let tipo of tipos">
                 <ion-label>{{tipo.descricao}}</ion-label>

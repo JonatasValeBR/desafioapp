@@ -6,6 +6,8 @@ import { Aplicativo, FiltroAplicativo } from 'src/app/api/aplicativo.model';
 import { AplicativoService } from 'src/app/api/aplicativo.service';
 import { cpuUsage } from 'process';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from 'src/app/core/toast.service';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
 
 @Component({
   selector: 'app-perfil-attrb',
@@ -21,7 +23,9 @@ export class PerfilAttrbPage implements OnInit {
   aplicativos: Aplicativo[];
   aplicativosBkp: Aplicativo[];
   aplicativosAdicionar: Aplicativo[];
-  constructor(private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private serviceAplicativos: AplicativoService, private formBuilder: FormBuilder) { }
+  buttonText: string = "Voltar";
+  buttonIcon: string ="chevron-back-outline";
+  constructor(private convert: ErrorHttpService, private toast: ToastService, private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private serviceAplicativos: AplicativoService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.instancePerfil();
@@ -34,6 +38,13 @@ export class PerfilAttrbPage implements OnInit {
         this.servicePerfil.getPerfilByID(parametros['id'])
         .subscribe(response => {
           this.instancePerfil(response);
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
         });
        }else{
          this.router.navigateByUrl('/tabs/menu/perfil');
@@ -43,7 +54,14 @@ export class PerfilAttrbPage implements OnInit {
      this.serviceAplicativos.getAplicativos()
      .subscribe(response => {
       this.instanceAplicativos(response.content);
-     });
+     }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
+    });
   }
 
   retirarAplicativo(id: number): void {
@@ -116,8 +134,16 @@ export class PerfilAttrbPage implements OnInit {
     } else {
       this.perfil.aplicativos = this.aplicativos;
       this.servicePerfil.putPerfil(this.perfil).subscribe(response => {
+        this.toast.show("Permissões atualizadas com sucesso", "toast-success");
         this.router.navigateByUrl('/tabs/menu/perfil');
-      });
+      }, error => {
+        error = this.convert.transform(error);
+        for(let x of error)
+        {
+          let msg: string = `Campo: ${x.fieldName} - ${x.message}`;
+          this.toast.show(msg, "toast-error", 3500);
+        }
+  });
     }
   }
 }

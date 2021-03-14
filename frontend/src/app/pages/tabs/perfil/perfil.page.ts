@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PerfilService } from 'src/app/api/perfil.service';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Perfil } from 'src/app/api/perfil.model';
+import { ToastService } from 'src/app/core/toast.service';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
 
 @Component({
   selector: 'app-perfil',
@@ -10,7 +12,7 @@ import { Perfil } from 'src/app/api/perfil.model';
 })
 export class PerfilPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  constructor(private service: PerfilService) { }
+  constructor(private convert: ErrorHttpService, private toast: ToastService,private service: PerfilService) { }
 
   perfis: Perfil[];
   scroll = false;
@@ -24,6 +26,13 @@ export class PerfilPage implements OnInit {
   addMoreItems(): void{
     this.service.getPerfis().subscribe(response => {
       this.perfis = response;
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
   }
 
@@ -32,17 +41,5 @@ export class PerfilPage implements OnInit {
     this.scroll = this.infiniteScroll.disabled;
   }
 
-  loadData(event): void {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
-      this.addMoreItems();
-
-      /*if (this.pessoa. == 1000) {
-        event.target.disabled = true;
-      }*/
-
-    }, 500);
-  }
 
 }

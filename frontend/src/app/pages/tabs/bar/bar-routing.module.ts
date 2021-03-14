@@ -54,7 +54,7 @@ const routes: Routes = [
             loadChildren: () => import('../aplicativo/aplicativo.module').then( m => m.AplicativoPageModule)
           },
           {
-            path: 'add/',
+            path: 'add',
             loadChildren: () => import('../aplicativos-add/aplicativos-add.module').then( m => m.AplicativosAddPageModule)
           },
           {

@@ -1,4 +1,4 @@
-<ion-tabs>
+<ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()">
   <ion-tab-bar slot="bottom" color="ligth">
 
     <ion-tab-button tab="pessoa">

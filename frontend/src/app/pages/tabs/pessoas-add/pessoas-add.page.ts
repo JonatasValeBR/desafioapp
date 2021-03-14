@@ -5,6 +5,9 @@ import { PerfilService } from 'src/app/api/perfil.service';
 import { AdicionarPessoa, TipoPessoa } from 'src/app/api/pessoa.model';
 import { PessoaService } from 'src/app/api/pessoa.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/app/core/toast.service';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
 
 @Component({
   selector: 'app-pessoas-add',
@@ -17,8 +20,10 @@ export class PessoasAddPage implements OnInit {
   perfis: Perfil[];
   tipos: TipoPessoa[];
   pessoa: AdicionarPessoa;
+  buttonText: string = "Voltar";
+  buttonIcon: string ="chevron-back-outline";
 
-  constructor(private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private convert: ErrorHttpService, private toast: ToastService, private formBuilder: FormBuilder, private servicePerfil: PerfilService, private servicePessoa: PessoaService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
    this.criandoForm();
@@ -31,9 +36,23 @@ export class PessoasAddPage implements OnInit {
   carregarCampos() {
     this.servicePerfil.getPerfis().subscribe(response => {
       this.perfis = response;
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
     this.servicePessoa.getTipoPessoa().subscribe(response => {
       this.tipos = response;
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
   }
 
@@ -49,8 +68,17 @@ export class PessoasAddPage implements OnInit {
       }
     };
     this.servicePessoa.postPessoas(this.pessoa).subscribe(response => {
+      this.toast.show("Pessoa Cadastrada com Sucesso", "toast-success");
       this.router.navigateByUrl('/tabs/menu/pessoa');
-    });
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
+    }
+    );
   }
 
   get nome(): FormControl {
@@ -71,12 +99,13 @@ export class PessoasAddPage implements OnInit {
 
   private criandoForm(): void {
     this.authForm = this.formBuilder.group({
-      nome: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]],
-      idade: ['',[Validators.required, Validators.max(150)]],
-      cpf: ['',[Validators.required]],
-      perfil: ['',[Validators.required]],
-      tipo: ['',[Validators.required]]
+      nome: ['teste', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]],
+      idade: ['21',[Validators.required, Validators.max(150)]],
+      cpf: ['57819420091',[Validators.required]],
+      perfil: ['1',[Validators.required]],
+      tipo: ['1',[Validators.required]]
     })
   }
+
 }
 

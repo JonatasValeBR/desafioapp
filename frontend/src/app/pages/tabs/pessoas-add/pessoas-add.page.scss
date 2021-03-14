@@ -17,19 +17,26 @@ ion-header ion-title {
 }
 
 .combo-box ion-title{
-  font-size: 1.1em;
-  font-weight: 450;
+  font-size: 1.3em;
+  font-weight: 600;
 }
 .combo-box ion-label{
   font-size: 1.3em;
 }
 
-.check-box ion-title{
-  font-size: 1.1em;
-  font-weight: 450;
+ion-header {
+  background: var(--ion-color-primary);
 }
 
-.check-box ion-label{
-  font-size: 1.52em;
+ion-title {
+  background: var(--ion-color-primary);
+  color: white;
 }
 
+ion-back-button {
+  color: white;
+}
+
+.color {
+  font-weight: 600;  color: var(--ion-color-primary);
+}

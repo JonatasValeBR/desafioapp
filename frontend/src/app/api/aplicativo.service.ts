@@ -29,8 +29,7 @@ export class AplicativoService {
       url = url.concat(`&direction=${direction}`);
     }
     return this.http.get<FiltroAplicativo>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -38,8 +37,7 @@ export class AplicativoService {
     const url = `${this.urlBase}`;
 
     return this.http.post<AdicionarAplicativo>(url,pessoa).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -47,8 +45,7 @@ export class AplicativoService {
     const url = `${this.urlBase}/${id}`;
 
     return this.http.delete<any>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -56,8 +53,7 @@ export class AplicativoService {
     const url = `${this.urlBase}/${id}`;
 
     return this.http.get<Aplicativo>(url).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
@@ -65,13 +61,9 @@ export class AplicativoService {
     const url = `${this.urlBase}/${aplicativo.id}`;
 
     return this.http.put<Aplicativo>(url,aplicativo).pipe(
-      map(obj => obj),
-      catchError(e => this.errorHandler(e))
+      map(obj => obj)
     );
   }
 
-  private errorHandler(e: any): Observable<any>{
-    console.log("Error ao acessar o servidor");
-    return EMPTY;
-  }
+
 }

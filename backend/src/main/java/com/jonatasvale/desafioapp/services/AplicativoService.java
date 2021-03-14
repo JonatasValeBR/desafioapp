@@ -30,7 +30,7 @@ public class AplicativoService {
 	
 	public Aplicativo buscar(Integer id) {
 		Optional<Aplicativo> obj = repositoryAplicativo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Aplicativo.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Aplicativo nao encontrado!"));
 	}
 	
 	@Transactional
@@ -38,7 +38,7 @@ public class AplicativoService {
 		obj.setId(null);
 		try {
 			obj = repositoryAplicativo.save(obj);
-		} catch (DataIntegrityViolationException err) {
+		} catch (Exception err) {
 			throw new DataIntegrityException("Nome ja cadastrado");
 		}
 		return obj;
@@ -49,7 +49,7 @@ public class AplicativoService {
 		buscar(obj.getId());
 		try {
 			obj = repositoryAplicativo.save(obj);
-		} catch (DataIntegrityViolationException err) {
+		} catch (Exception err) {
 			throw new DataIntegrityException("Nome ja cadastrado");
 		}
 		return obj;

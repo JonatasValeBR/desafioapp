@@ -3,7 +3,9 @@ import { IonInfiniteScroll} from '@ionic/angular';
 import { PessoaService} from 'src/app/api/pessoa.service';
 import { VisualizarPessoa, FiltroPessoa } from 'src/app/api/pessoa.model';
 import { AlertService } from 'src/app/services/alert.service';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
+import { ToastService } from 'src/app/core/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pessoa',
@@ -12,7 +14,7 @@ import { Content } from '@angular/compiler/src/render3/r3_ast';
 })
 export class PessoaPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  constructor(private service: PessoaService, private alert: AlertService) { }
+  constructor( private convert: ErrorHttpService, private toast: ToastService, private service: PessoaService, private alert: AlertService) { }
 
   filtroPessoa: FiltroPessoa;
   pessoas: VisualizarPessoa[];
@@ -21,7 +23,7 @@ export class PessoaPage implements OnInit {
   scroll: boolean = false;
   orderBy: string = "ASC";
   sortBy: string = "nome";
-
+  numberPage: number = 6;
   ngOnInit(): void {
 
   }
@@ -88,8 +90,16 @@ export class PessoaPage implements OnInit {
     .then((res:any)=>{
       if(res.role  === 'okay'){
         this.service.deletePessoas(id).subscribe(response => {
-          window.location.reload()
-        })
+          this.toast.show("Pessoa Excluida com Sucesso", "toast-success");
+          this.iniciar();
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
+    })
       }
     });
   }
@@ -98,7 +108,7 @@ export class PessoaPage implements OnInit {
     this.pessoas = [];
     this.pessoasBackup = [];
     this.filtroPessoa = null;
-    this.addMoreItems(0,6,this.sortBy,this.orderBy, undefined, true);
+    this.addMoreItems(0,this.numberPage,this.sortBy,this.orderBy, undefined, true);
   }
 
   toggleInfiniteScroll(): void {
@@ -110,16 +120,16 @@ export class PessoaPage implements OnInit {
     setTimeout(() => {
       event.target.complete();
       if (this.filtroPessoa.last != true){
-        this.addMoreItems(this.filtroPessoa.number+1,3,this.sortBy,this.orderBy);
+        this.addMoreItems(this.filtroPessoa.number+1,this.numberPage,this.sortBy,this.orderBy);
       }
     }, 500);
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
+
 
     setTimeout(() => {
-      console.log('Async operation has ended');
+
       event.target.complete();
       this.iniciar();
       event.target.disabled = false;
@@ -151,6 +161,13 @@ export class PessoaPage implements OnInit {
         this.addMoreItems(0,this.filtroPessoa.totalElements,this.sortBy,this.orderBy, true);
       }
       this.setPessoas(response['content'], all);
+    }, error => {
+      error = this.convert.transform(error);
+      for(let x of error)
+      {
+        let msg: string = `${x.fieldName} - ${x.message}`;
+        this.toast.show(msg, "toast-error", 3500);
+      }
     });
   }
 

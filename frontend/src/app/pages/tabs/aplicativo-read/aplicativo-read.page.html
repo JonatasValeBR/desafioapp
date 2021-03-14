@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title size="large">Visualizar perfil</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/menu/aplicativo"
+          [text]="buttonText"
+          [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">Visualizar</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +16,7 @@
       <ion-col size="0.5"></ion-col>
       <ion-col>
         <ion-item>
-          <ion-label position="stacked">Nome</ion-label>
+          <ion-label class="color" position="stacked">Nome</ion-label>
           <ion-input [readonly]="true" type="text">{{aplicativo.nome}}</ion-input>
         </ion-item>
       </ion-col>
@@ -21,9 +27,9 @@
       <ion-col size="11">
         <ion-item>
           <ion-list>
-            <ion-label position="stacked">Perfis</ion-label>
+            <ion-label class="color" position="stacked">Perfis</ion-label>
             <ion-item lines="none" *ngFor="let perfil of perfis">
-              <ion-icon slot="start" name="eye-outline" routerLink="/tabs/menu/pessoa/read/{{perfil.id}}"></ion-icon>
+              <ion-icon slot="start" name="eye-outline" routerLink="/tabs/menu/pessoa/read/{{perfil.id}}" color="secondary"></ion-icon>
               <ion-label>{{perfil.nome}}</ion-label>
             </ion-item>
           </ion-list>

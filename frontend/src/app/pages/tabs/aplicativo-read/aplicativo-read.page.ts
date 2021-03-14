@@ -4,6 +4,8 @@ import { PerfilWithApp, Perfil } from 'src/app/api/perfil.model';
 import { PerfilService } from 'src/app/api/perfil.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AplicativoService } from 'src/app/api/aplicativo.service';
+import { ErrorHttpService } from 'src/app/core/error-http.service';
+import { ToastService } from 'src/app/core/toast.service';
 
 @Component({
   selector: 'app-aplicativo-read',
@@ -14,7 +16,9 @@ export class AplicativoReadPage implements OnInit {
 
   aplicativo: Aplicativo;
   perfis: Perfil[];
-  constructor(private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private serviceAplicativo: AplicativoService) { }
+  buttonText: string = "Voltar";
+  buttonIcon: string ="chevron-back-outline";
+  constructor(private convert: ErrorHttpService, private toast: ToastService,private servicePerfil: PerfilService, private route: ActivatedRoute, private router: Router, private serviceAplicativo: AplicativoService) { }
 
   ngOnInit() {
     this.instancePerfis();
@@ -28,10 +32,24 @@ export class AplicativoReadPage implements OnInit {
         this.serviceAplicativo.getAplicativoByID(parametros['id'])
         .subscribe(response => {
           this.instanceAplicativo(response);
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
         });
         this.servicePerfil.getPerfisByAplicativo(parametros['id'])
         .subscribe(response => {
           this.instancePerfis(response);
+        }, error => {
+          error = this.convert.transform(error);
+          for(let x of error)
+          {
+            let msg: string = `${x.fieldName} - ${x.message}`;
+            this.toast.show(msg, "toast-error", 3500);
+          }
         });
        }else{
          this.router.navigateByUrl('/tabs/menu/perfil');

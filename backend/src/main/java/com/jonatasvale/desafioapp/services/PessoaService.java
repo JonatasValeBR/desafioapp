@@ -32,7 +32,7 @@ public class PessoaService {
 	
 	public Pessoa buscar(Integer id) {
 		Optional<Pessoa> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Pessoa.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Pessoa nao encontrado!"));
 	}
 	
 	@Transactional

@@ -17,3 +17,19 @@ ion-header ion-title {
   font-size: 1.25em;
 }
 
+ion-header {
+  background: var(--ion-color-primary);
+}
+
+ion-title {
+  background: var(--ion-color-primary);
+  color: white;
+}
+
+ion-back-button {
+  color: white;
+}
+
+.color {
+  font-weight: 600;  color: var(--ion-color-primary);
+}
