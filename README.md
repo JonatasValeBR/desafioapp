@@ -62,9 +62,9 @@ A populacao do BD esta sendo feito arquivo impot no proprio springboot.
 
 <b>Execucao do Projeto Spring</b>
 
-Necessario ter JAVA instalado, preferencia versao 11.
+Necessario ter JAVA instalado, preferencia versao 11. 
 
-Necessario ter APACHE MAVEN instalado, preferencia versao 3.6.3
+Necessario ter APACHE MAVEN instalado, preferencia versao 3.6.3 ##Tutorial: https://maven.apache.org/install.html
 
 Va ate a diretorio do projeto backend, execute o comando na raiz do mesmo:
   
