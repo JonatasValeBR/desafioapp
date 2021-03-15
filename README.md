@@ -97,4 +97,3 @@ http://localhost:8080/api/swagger-ui/
 Atraves dessa url sera possivel consultar todos os end-points e suas repostas/erros.
 
 
-Francisco Hugo César (FHC)
