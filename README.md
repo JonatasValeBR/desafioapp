@@ -47,8 +47,11 @@ Instale o gerenciador do MYSQL de sua preferencia (Workbench, xampp, lampp e etc
 Acesse "desafio-app/backend/src/main/resources/application-dev.properties", realize as seguintes alteracoes:
 
 spring.datasource.url=jdbc:mysql://localhost:{{PORTA_DO_SEU_MYSQL}}/desafio_app
+
 spring.datasource.username={{SEU_USUARIO}}
+
 spring.datasource.password=((SUA_SENHA_CASO_EXISTA}}
+
 spring.jpa.hibernate.ddl-auto=create -> Caso deseje que os dados persista, altere esse campo para "update"
 
 Acesse "desafio-app/backend/src/main/resources/application.properties". realize a seguinte alteracao:
