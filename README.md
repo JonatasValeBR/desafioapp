@@ -44,6 +44,8 @@ Necessario ter MYSQL-SERVER instalado
 
 Instale o gerenciador do MYSQL de sua preferencia (Workbench, xampp, lampp e etc), ao acessar o seu localhost ou usario de preferencia, crie uma database chamado "desafio_app"
 
+CREATE DATABASE desafio_app DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
 Acesse "desafio-app/backend/src/main/resources/application-dev.properties", realize as seguintes alteracoes:
 
 spring.datasource.url=jdbc:mysql://localhost:{{PORTA_DO_SEU_MYSQL}}/desafio_app
