@@ -30,7 +30,7 @@ O backend em Spring encontra-se no diretório : backend
 
 O frontend em Ionic encontra-se no diretório : frontend
 
-Recursos de vídeo e prints encontra-se no diretório : Recursos
+Recursos de vídeo e prints(Modelo MER) encontra-se no diretório : Recursos
 
 <b>Passo a Passo para execução do projeto:</b>
 
