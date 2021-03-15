@@ -16,6 +16,9 @@ public interface AplicativoRepository extends JpaRepository<Aplicativo, Integer>
 	
 	@Transactional(readOnly=true)
 	Page<Aplicativo> findDistinctByNomeContaining(String nome, Pageable pageRequest);
+	
+	@Transactional(readOnly=true)
+	List<Aplicativo> findByNome(String nome);
 
 	@Transactional(readOnly=true)
 	Page<Aplicativo> findDistinctByNomeContainingAndPerfisIn(String nome, List<Perfil> perfis, Pageable pageRequest);

@@ -133,7 +133,9 @@ export class AplicativoPage implements OnInit {
 
   recarregarAposFiltro(){
     this.aplicativos = [];
-    this.addMoreItems(0,this.aplicativosBackup.length,this.sortBy,this.orderBy);
+    console.log(this.filtroAplicativo);
+    console.log(this.aplicativosBackup);
+    this.addMoreItems(0,this.numberPage,this.sortBy,this.orderBy);
   }
 
   doRefresh(event) {

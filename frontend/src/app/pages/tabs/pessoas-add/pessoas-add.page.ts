@@ -99,11 +99,11 @@ export class PessoasAddPage implements OnInit {
 
   private criandoForm(): void {
     this.authForm = this.formBuilder.group({
-      nome: ['teste', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]],
-      idade: ['21',[Validators.required, Validators.max(150)]],
-      cpf: ['57819420091',[Validators.required]],
-      perfil: ['1',[Validators.required]],
-      tipo: ['1',[Validators.required]]
+      nome: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(80)]],
+      idade: ['',[Validators.required, Validators.max(150)]],
+      cpf: ['',[Validators.required]],
+      perfil: ['',[Validators.required]],
+      tipo: ['',[Validators.required]]
     })
   }
 

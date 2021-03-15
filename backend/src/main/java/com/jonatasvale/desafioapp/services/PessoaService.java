@@ -51,8 +51,14 @@ public class PessoaService {
 		Pessoa newObj = buscar(obj.getId());
 		atualizarDados(newObj, obj);
 		try {
-			obj = repository.save(newObj);
-		} catch (DataIntegrityViolationException err) {
+			Pessoa existing = repository.findByCpfNotInId(newObj.getCpf(), newObj.getId());
+			if (existing == null) {
+				obj = repository.save(newObj);
+			} else {
+				throw new Exception();	
+			}
+			
+		} catch (Exception err) {
 			throw new DataIntegrityException("CPF ja cadastrado");
 		}
 		return obj;

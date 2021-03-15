@@ -47,8 +47,13 @@ public class AplicativoService {
 	@Transactional
 	public Aplicativo atualizar(Aplicativo obj) {
 		buscar(obj.getId());
+		List<Aplicativo> apps = repositoryAplicativo.findByNome(obj.getNome());
 		try {
+			if(apps.size() > 0) {
+				throw new Exception();			
+			} 
 			obj = repositoryAplicativo.save(obj);
+			
 		} catch (Exception err) {
 			throw new DataIntegrityException("Nome ja cadastrado");
 		}

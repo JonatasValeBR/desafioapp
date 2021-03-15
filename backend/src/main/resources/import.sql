@@ -1,45 +1,43 @@
-INSERT INTO Aplicativo (nome) VALUES ('Aplicativo 1'),('Aplicativo 2'),('Aplicativo 3'),('Aplicativo 4'),('Aplicativo 5');
+INSERT INTO Aplicativo (nome) VALUES ('TikTok'),('WhatsApp'),('Facebook'),('Instagram'),('Messenger'),('Snapchat'),('Telegram'),('Google Meet'),('Netflix');
 
-INSERT INTO Perfil (nome) VALUES ('Usuario Comum'),('Gestor'),('Administrador');
+INSERT INTO Perfil (nome) VALUES ('Usuário Comum'),('Gestor'),('Administrador');
 
-INSERT INTO Perfil_aplicativo (aplicativo_id, perfil_id) VALUES (1,1),(1,2),(2,3),(2,1);
-
-SELECT * FROM PESSOA;
+INSERT INTO Perfil_aplicativo (aplicativo_id, perfil_id) VALUES (7,2),(4,2),(3,2),(8,2),(9,2),(2,2),(7,3),(8,3),(9,3),(4,3),(6,3),(7,1),(6,1),(5,1),(4,1),(3,1),(2,1);
 		
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('11234324590',22,'Usuario 1',1,1);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('01348006560',25,'Henrique Gael Mendes',1,1);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('21234324670',22,'Usuario 2 ',1,2);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('86361260291',42,'Hadassa Sophia Rayssa Rezende',1,2);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('31234324570',22,'Usuario 3',1,3);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('18572031006',45,'Carolina Alana Emanuelly Jesus',1,3);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('41234324470',22,'Usuario 4',2,1);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('88905754171',67,'Sebastiana Jéssica da Mata',2,1);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('51234324370',22,'Usuario 5',2,2);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('26994654966',46,'Bento Heitor Carlos Eduardo da Mata',2,2);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('61234324270',22,'Usuario 6',2,3);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('35691757741',76,'Josefa Esther Rodrigues',2,3);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('71234324590',22,'Usuario 7',3,1);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('23919786505',58,'Mariah Analu da Silva',3,1);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('81234324670',22,'Usuario 8 ',3,2);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('64725766291',58,'Eduardo Marcelo Diogo Rodrigues',3,2);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('91234324570',22,'Usuario 9',3,3);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('44314920548',20,'Sônia Allana Clara Monteiro',3,3);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('01234324470',22,'Usuario 10',1,1);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('29028088440',46,'Paulo João Ramos',1,1);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('31234324370',22,'Usuario 11',1,2);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('80088696405',41,'Pietro Nelson Geraldo Barbosa',1,2);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('32234324270',22,'Usuario 12',1,3);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('88248772900',38,'Antônia Julia Mendes',1,3);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('33234324590',22,'Usuario 13',2,1);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('89125599828',65,'Marli Gabriela Lima',2,1);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('34234324670',22,'Usuario 14',2,2);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('18746998101',67,'Vinicius Renato Martin da Mata',2,2);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('35234324570',22,'Usuario 15',2,3);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('60821420208',44,'Renato Noah Fernandes',2,3);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('36234324470',22,'Usuario 16',3,1);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('87735343825',51,'Sueli Regina dos Santos',3,1);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('37234324370',22,'Usuario 17',3,2);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('01937494675',54,'Caroline Luna Teixeira',3,2);
 
-Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('318234324270',22,'Usuario 18',3,3);
+Insert INTO Pessoa (cpf, idade, nome, tipo, perfil_id) VALUES ('58946614803',80,'Vinicius Roberto Victor Nunes',3,3);
 	
 
